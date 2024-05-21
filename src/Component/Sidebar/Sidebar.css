@@ -1,0 +1,86 @@
+.myaccount {
+    height: 100vh;
+}
+
+.myaccount-logo img{
+    width: 100%;
+    object-fit: cover;
+    margin: 1rem 0 2rem 0;
+}
+
+.myaccount-body {
+    /* padding: 1rem; */
+    display: flex;
+    /* align-items: center; */
+    /* gap: 2rem; */
+    height: 100%;
+}
+
+.myaccount-body-left {
+    width: 25%;
+    padding-right: 4rem;
+    padding: 0 2rem;
+    height: 100%;
+    background-color: white;
+    /* border-right: 1px solid #003f5242; */
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+.myaccount-body-left ul{
+    padding: 0;
+}
+.myaccount-body-left ul li {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    font-size: 1rem;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+.myaccount-body-left ul li svg{
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    font-size: 40px;
+}
+
+.myaccount-body-left .selected {
+    font-weight: 500;
+    border-radius: 5px;
+    background-color: rgb(237, 236, 236);
+}
+
+.myaccount-body-right {
+    width: 75%;
+    background-color: #00678612;
+}
+
+.account-topbar{
+background-color: white;
+box-shadow: 3px 4px 10px 0px rgba(0, 0, 0, 0.3);
+z-index: 1;
+}
+
+.account-topbar-profile {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1rem 2rem;
+}
+.account-topbar-profile svg{
+    font-size: 40px;
+}
+
+.myaccount-body-right h2{
+    text-align: center;
+    color: black;
+    font-size: 30px;
+    font-weight: 400;
+    margin: 0;
+    -webkit-text-stroke: thin;
+}
+
+.myaccount-body-right-items p {
+    color: gray;
+}

@@ -1,24 +1,35 @@
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.css';
+import Login from "./Component/LogIn/Login";
+import Home from "./Pages/Home";
+import { useState } from "react";
+import Alert from "./Component/Alert/Alert";
+import Sidebar from "./Component/Sidebar/Sidebar";
 
 function App() {
+  const [alert, setAlert] = useState(null)
+  const showAlert = (message, type) => {
+    setAlert({
+      msg: message,
+      type: type
+    })
+    setTimeout(() => {
+      setAlert(null)
+    }, 1500);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    {/* <NoteState> */}
+        <Router>
+          {/* <Sidebar /> */}
+          <Alert alert={alert} />
+            <Routes>
+              <Route path="/" exact element={<Home showAlert={showAlert}/>} />
+              <Route path="/login" exact element={<Login showAlert={showAlert}/>} />
+             </Routes>
+        </Router>
+      {/* </NoteState> */}
+    </>
   );
 }
 
