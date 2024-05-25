@@ -36,7 +36,7 @@ const Login = (props) => {
     };
 
     return (
-        <div className='container'>
+        <div className='login-container'>
             <div className="login-box">
                 <div className="login-box-imag">
                     <img src={logo} alt="" />

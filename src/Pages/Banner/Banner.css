@@ -1,0 +1,32 @@
+.banner{
+    padding: 2rem;
+    background-color: #f1f1f1;
+    height: 95%;
+    overflow-y: auto;
+}
+.banner button{
+    padding: 10px 20px;
+    background-color: #673de6;
+    border: none;
+    color: white;
+    border-radius: 8px;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    color: #fff;
+    background-color: #673de6;
+    border-color: #673de6;
+    box-shadow: none;
+}
+
+.btn-primary:active:focus{
+    box-shadow: none !important;
+}
+
+.banner-button{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

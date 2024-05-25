@@ -1,0 +1,66 @@
+.card {
+  background-color: white;
+  border-radius: 8px;
+  position: relative;
+  margin-bottom: 1rem;
+}
+.card img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.card-title {
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+.card-title h5 {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.card-title p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.card-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.card-buttons p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  border-top: 1px solid rgb(224, 224, 224);
+  cursor: pointer;
+}
+.card-buttons p:first-child {
+  border-right: 1px solid rgb(224, 224, 224);
+}
+.card-buttons p:first-child:hover {
+  color: red;
+}
+.card-buttons p:last-child:hover {
+  color: #673de6;
+}
+
+/*.............................. Card2.................. */
+
+.card-image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0rem 1rem 0rem;
+}
+.card-image img{
+   width: 20%;
+}
