@@ -145,8 +145,29 @@ const SidebarNav = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Clients"
-              to="/clients"
+              title="Certified"
+              to="/certified"
+              icon={<HelpOutlineOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+              <Item
+                title="Clients"
+                to="/clients"
+                icon={<HelpOutlineOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            <Item
+              title="Customers"
+              to="/customers"
+              icon={<HelpOutlineOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Blog"
+              to="/blog"
               icon={<HelpOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
