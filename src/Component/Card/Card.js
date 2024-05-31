@@ -1,27 +1,41 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
+import Subcategories from "../Subcategories/Subcategories";
 import { MdDelete, MdEdit } from "react-icons/md";
 import "./Card.css"
 
-const Card = (props) => {
-    const { deleteItem, note, updateNote } = props;
+const Card = ({ note,index, deleteItem, updateNote, showAlert }) => {
+    const [showSubcategories, setShowSubcategories] = useState(false);
+
+    const handleViewClick = () => {
+        setShowSubcategories(!showSubcategories);
+    };
 
     return (
         <>
-            <div className="col-md-3 " style={{ color: "black" }}>
-                <div className="card">
-                    <img src="https://static.vecteezy.com/system/resources/previews/040/813/021/non_2x/ai-generated-globe-and-coin-stack-symbolizing-money-makes-the-world-go-round-free-photo.jpg" alt="" />
-                    <div className="card-title">
-                        <h5>{note.title}</h5>
-                        <p>{note.description}</p>
+            <tr className="cards">
+                <td>{index + 1}</td>
+                <td>{note.category}</td>
+                <td>
+                    <div className="card2-button">
+                        <p onClick={() => updateNote(note)}><MdEdit /></p>
+                        <p onClick={() => deleteItem(note._id)}><MdDelete /></p>
                     </div>
-                    <div className="card-buttons">
-                        <p onClick={() => { deleteItem(note._id); props.showAlert("Deleted successfully", "success"); }} ><MdDelete className="mx-2" /></p>
-                        <p onClick={() => { updateNote(note) }} ><MdEdit className="mx-2" /></p>
-                    </div>
-                </div>
-            </div>
+                </td>
+                <td className="view ">
+                    <button className="btn btn-secondary" onClick={handleViewClick}>
+                        {showSubcategories ? "Hide" : "View"}
+                    </button>
+                </td>
+            </tr>
+            {showSubcategories && (
+                <tr>
+                    <td colSpan="3">
+                        <Subcategories note={note} showAlert={showAlert} />
+                    </td>
+                </tr>
+            )}
         </>
-    )
-}
+    );
+};
 
-export default Card
+export default Card;

@@ -14,7 +14,6 @@ const Card2 = (props) => {
                     </div>
                     <div className="card-title">
                         <h5>{note.title}</h5>
-                        <p>{note.description}</p>
                     </div>
                     <div className="card-buttons">
                         <p onClick={() => { deleteItem(note._id); props.showAlert("Deleted successfully", "success"); }} ><MdDelete className="mx-2" /></p>

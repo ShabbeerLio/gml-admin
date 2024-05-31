@@ -6,3 +6,7 @@ object-fit: cover;
 .pro-inner-item{
     padding: 10px 20px !important;
 }
+
+.pro-icon svg{
+    font-size: 20px;
+}

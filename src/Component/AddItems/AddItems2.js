@@ -1,24 +1,52 @@
-import React, { useContext, useState } from 'react'
-import "./AddItems.css"
+import React, { useState } from 'react';
 import { MdAdd } from "react-icons/md";
+import "./AddItems.css";
+import axios from "axios";
 
 const AddItems2 = (props) => {
-
-    // const context = useContext(NoteContext);
+    const host = "http://localhost:8000";
     const { addItem } = props;
+    const [note, setNote] = useState({ title: "", imageUrl: "" });
+    const [image, setImage] = useState(null);
+    const [imgFile, setImgFile] = useState('');
 
-    const [note, setNote] = useState({ title: "", description: ""})
+    const handleImageChange = (e) => {
+        setImage(e.target.files[0]);
+        console.log(image)
+    };
 
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         e.preventDefault();
-        addItem(note.title, note.description);
-        setNote({ title: "", description: "",})
+        let imageUrl = note.imageUrl;
+
+        if (image) {
+            const formData = new FormData();
+            for(var x = 0; x<image.length; x++) {
+                formData.append('file', image[x])
+            }
+            axios.post("http://localhost:5000/public/upload", formData)
+            .then(res => { 
+                setImgFile('http://localhost:5000/public/images/'+res.formData.filename)
+              })
+            // formData.append('file', image);
+            // const response = await fetch(`${host}/api/upload`, {
+            //     method: 'POST',
+            //     body: formData,
+            // });
+
+            // const data = await response.json();
+            // imageUrl = data.url;
+        }
+
+        addItem(note.title, imageUrl);
+        setNote({ title: "", imageUrl: "" });
+        setImage(null);
         props.showAlert("Added successfully", "success");
-    }
+    };
 
     const onChange = (e) => {
-        setNote({ ...note, [e.target.name]: e.target.value })
-    }
+        setNote({ ...note, [e.target.name]: e.target.value });
+    };
 
     return (
         <>
@@ -32,38 +60,30 @@ const AddItems2 = (props) => {
                         <div className="modal-body">
                             <form>
                                 <div className="mb-3">
-                                    <label htmlFor="title" className="form-label">
-                                        Title
-                                    </label>
+                                    <label htmlFor="title" className="form-label">Title</label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         id="title"
                                         name='title'
-                                        aria-describedby="emailHelp"
+                                        aria-describedby="titleHelp"
                                         onChange={onChange}
-                                        minLength={5}
                                         value={note.title}
                                         required
                                     />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="description" className="form-label">
-                                        Icon
-                                    </label>
+                                    <label htmlFor="image" className="form-label">Image</label>
                                     <input
-                                        type="text"
-                                        className="form-control "
-                                        name='description'
-                                        id="description"
-                                        onChange={onChange}
-                                        minLength={5}
-                                        value={note.description}
-                                        required
+                                        type="file"
+                                        className="form-control"
+                                        id="image"
+                                        name="image"
+                                        onChange={handleImageChange}
                                     />
                                 </div>
-                                <button disabled={note.title.length < 3 || note.description.length < 3} type="submit" className="AddNote-button" onClick={handleClick} data-bs-dismiss="modal" aria-label="Close" ref={props.refClose}>
-                                    <MdAdd />Add
+                                <button disabled={note.title.length < 3} type="submit" className="AddNote-button" onClick={handleClick} data-bs-dismiss="modal" aria-label="Close" ref={props.refClose}>
+                                    <MdAdd /> Add
                                 </button>
                             </form>
                         </div>
@@ -71,7 +91,7 @@ const AddItems2 = (props) => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default AddItems2
+export default AddItems2;

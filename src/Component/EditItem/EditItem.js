@@ -54,32 +54,6 @@ const EditItem = (props) => {
                                         id="edescription"
                                         onChange={props.onChange}
                                         minLength={5}
-                                        required
-                                        value={props.note.edescription}
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="img" className="form-label">
-                                        Image
-                                    </label>
-                                    {/* <input
-                                        className="form-control"
-                                        type="file"
-                                        id="img"
-                                        name="img"
-                                        accept="image/*"
-                                        onChange={props.onChange}
-                                        required
-                                        value={props.note.img}
-                                    /> */}
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        name="etag"
-                                        id="etag"
-                                        onChange={props.onChange}
-                                        required
-                                        value={props.note.etag}
                                     />
                                 </div>
                             </form>
@@ -94,10 +68,11 @@ const EditItem = (props) => {
                                 Close
                             </button>
                             <button
-                                disabled={props.note.etitle.length < 5 || props.note.edescription.length < 5}
+                                // disabled={props.note.etitle.length < 5 }
                                 onClick={props.handleClick}
                                 type="button"
                                 className="update-button"
+                                data-bs-dismiss="modal"
                             >
                                 Update
                             </button>

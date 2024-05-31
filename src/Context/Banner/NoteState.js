@@ -9,170 +9,6 @@ const NoteState = (props) => {
 
     const [notes, setNotes] = useState(notesData);
 
-    
-    // ....................................Banner..................................//
-    // Get all Note
-    const getNotes = async () => {
-        // API Call
-
-        const response = await fetch(`${host}/api/notes/fetchallnotes`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "auth-token": localStorage.getItem('token')
-            },
-        });
-        const json = await response.json()
-        setNotes(json)
-    }
-
-    // Add Banner
-    const addNote = async (title, description, tag) => {
-        // API Call
-
-        const response = await fetch(`${host}/api/notes/addnote`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "auth-token": localStorage.getItem('token')
-            },
-            body: JSON.stringify({ title, description, tag })
-        });
-        const note = await response.json();
-        setNotes(notes.concat(note))
-        // console.log("adding a new note")
-
-    }
-
-    // Edit Banner
-
-    const editNote = async (id, title, description, tag) => {
-        // API Call 
-        const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                "auth-token": localStorage.getItem('token')
-            },
-            body: JSON.stringify({ title, description, tag })
-        });
-        const json = await response.json();
-        console.log(json)
-
-        let newNotes = JSON.parse(JSON.stringify(notes))
-        // Logic to edit in client
-        for (let index = 0; index < newNotes.length; index++) {
-            const element = newNotes[index];
-            if (element._id === id) {
-                newNotes[index].title = title;
-                newNotes[index].description = description;
-                newNotes[index].tag = tag;
-                break;
-            }
-        }
-        setNotes(newNotes);
-    }
-
-    // Delete Banner
-    const deleteNote = async (id) => {
-        // API Call
-        const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "auth-token": localStorage.getItem('token')
-            },
-        });
-        const json = await response.json();
-        console.log(json)
-
-        console.log("deleting note with id" + id)
-        const newNotes = notes.filter((note) => { return note._id !== id })
-        setNotes(newNotes)
-    }
-
-    // ................................. Welcome.......................................//
-
-    // Get all Welcome
-    const getWelcome = async () => {
-        // API Call
-
-        const response = await fetch(`${host}/api/welcome/fetchallwelcome`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "auth-token": localStorage.getItem('token')
-            },
-        });
-        const json = await response.json()
-        setNotes(json)
-    }
-
-    // Add Welcome
-    const addWelcome = async (title, description, tag) => {
-        // API Call
-
-        const response = await fetch(`${host}/api/welcome/addwelcome`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "auth-token": localStorage.getItem('token')
-            },
-            body: JSON.stringify({ title, description, tag })
-        });
-        const note = await response.json();
-        setNotes(notes.concat(note))
-        // console.log("adding a new note")
-
-    }
-
-    // Edit Welcome
-
-    const editWelcome = async (id, title, description, tag) => {
-        // API Call 
-        const response = await fetch(`${host}/api/welcome/updatewelcome/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                "auth-token": localStorage.getItem('token')
-            },
-            body: JSON.stringify({ title, description, tag })
-        });
-        const json = await response.json();
-        console.log(json)
-
-        let newNotes = JSON.parse(JSON.stringify(notes))
-        // Logic to edit in client
-        for (let index = 0; index < newNotes.length; index++) {
-            const element = newNotes[index];
-            if (element._id === id) {
-                newNotes[index].title = title;
-                newNotes[index].description = description;
-                newNotes[index].tag = tag;
-                break;
-            }
-        }
-        setNotes(newNotes);
-    }
-
-    // Delete Welcome
-    const deleteWelcome = async (id) => {
-        // API Call
-        const response = await fetch(`${host}/api/welcome/deletewelcome/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "auth-token": localStorage.getItem('token')
-            },
-        });
-        const json = await response.json();
-        console.log(json)
-
-        console.log("deleting note with id" + id)
-        const newNotes = notes.filter((note) => { return note._id !== id })
-        setNotes(newNotes)
-    }
-
 
     // ................................. Service.......................................//
 
@@ -192,7 +28,7 @@ const NoteState = (props) => {
     }
 
     // Add Services
-    const addService = async (title, description, tag) => {
+    const addService = async (title) => {
         // API Call
 
         const response = await fetch(`${host}/api/service/addservice`, {
@@ -201,7 +37,7 @@ const NoteState = (props) => {
                 "Content-Type": "application/json",
                 "auth-token": localStorage.getItem('token')
             },
-            body: JSON.stringify({ title, description, tag })
+            body: JSON.stringify({ title })
         });
         const note = await response.json();
         setNotes(notes.concat(note))
@@ -211,7 +47,7 @@ const NoteState = (props) => {
 
     // Edit Services
 
-    const editService = async (id, title, description, tag) => {
+    const editService = async (id, title,) => {
         // API Call 
         const response = await fetch(`${host}/api/service/updateservice/${id}`, {
             method: 'PUT',
@@ -219,7 +55,7 @@ const NoteState = (props) => {
                 'Content-Type': 'application/json',
                 "auth-token": localStorage.getItem('token')
             },
-            body: JSON.stringify({ title, description, tag })
+            body: JSON.stringify({ title })
         });
         const json = await response.json();
         console.log(json)
@@ -230,8 +66,6 @@ const NoteState = (props) => {
             const element = newNotes[index];
             if (element._id === id) {
                 newNotes[index].title = title;
-                newNotes[index].description = description;
-                newNotes[index].tag = tag;
                 break;
             }
         }
@@ -257,11 +91,10 @@ const NoteState = (props) => {
     }
 
 
-    // ................................. Clients.......................................//
-    // Get all Services
+    // ................................. Languages.......................................//
+    // Get all Clients
     const getClients = async () => {
         // API Call
-
         const response = await fetch(`${host}/api/clients/fetchallclients`, {
             method: "GET",
             headers: {
@@ -269,88 +102,110 @@ const NoteState = (props) => {
                 "auth-token": localStorage.getItem('token')
             },
         });
-        const json = await response.json()
-        setNotes(json)
-    }
-
-    // Add Services
-    const addClients = async (title, description, tag) => {
-        // API Call
-
-        const response = await fetch(`${host}/api/clients/addclients`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "auth-token": localStorage.getItem('token')
-            },
-            body: JSON.stringify({ title, description, tag })
-        });
-        const note = await response.json();
-        setNotes(notes.concat(note))
-        // console.log("adding a new note")
-
-    }
-
-    // Edit Services
-
-    const editClients = async (id, title, description, tag) => {
-        // API Call 
-        const response = await fetch(`${host}/api/clients/updateclients/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                "auth-token": localStorage.getItem('token')
-            },
-            body: JSON.stringify({ title, description, tag })
-        });
         const json = await response.json();
-        console.log(json)
+        setNotes(json);
+    }
 
-        let newNotes = JSON.parse(JSON.stringify(notes))
-        // Logic to edit in client
-        for (let index = 0; index < newNotes.length; index++) {
-            const element = newNotes[index];
-            if (element._id === id) {
-                newNotes[index].title = title;
-                newNotes[index].description = description;
-                newNotes[index].tag = tag;
-                break;
-            }
+    // Add Clients
+    const addClients = async (category, subcategories) => {
+        try {
+            // Convert subcategories to array of objects
+            const formattedSubcategories = subcategories.map(subcategory => ({
+                name: subcategory,
+                description: '' // You might want to add a description here if available
+            }));
+
+            // API Call
+            const response = await fetch(`${host}/api/clients/addclients`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": localStorage.getItem('token')
+                },
+                body: JSON.stringify({ category, subcategories: formattedSubcategories })
+            });
+            const client = await response.json();
+            setNotes(notes.concat(client));
+            console.log("Client added successfully", "success");
+        } catch (error) {
+            console.error("Error adding client:", error.message);
+            // showAlert("Failed to add client", "error");
         }
-        setNotes(newNotes);
     }
 
-    // Delete Services
+
+    // Edit Clients
+    const editClients = async (id, category, subcategories) => {
+        try {
+            // Format subcategories data as array of objects
+            const formattedSubcategories = subcategories.map(sub => ({
+                name: sub.name,
+                description: sub.description || '' // Ensure description is provided or set to empty string
+            }));
+
+            // API Call 
+            const response = await fetch(`${host}/api/clients/updateclients/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "auth-token": localStorage.getItem('token')
+                },
+                body: JSON.stringify({ category, subcategories: formattedSubcategories })
+            });
+            const json = await response.json();
+            console.log(json);
+            if (response.ok) {
+                let newNotes = JSON.parse(JSON.stringify(notes));
+                // Logic to edit in client
+                for (let index = 0; index < newNotes.length; index++) {
+                    const element = newNotes[index];
+                    if (element._id === id) {
+                        newNotes[index].category = category;
+                        newNotes[index].subcategories = subcategories;
+                        break;
+                    }
+                }
+                setNotes(newNotes);
+            } else {
+                // Handle error response
+                console.error("Failed to edit client:", json.error);
+            }
+        } catch (error) {
+            console.error("Error editing client:", error.message);
+        }
+    }
+
+
+    // Delete Clients
     const deleteClients = async (id) => {
-        // API Call
-        const response = await fetch(`${host}/api/clients/deleteclients/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "auth-token": localStorage.getItem('token')
-            },
-        });
-        const json = await response.json();
-        console.log(json)
-
-        console.log("deleting note with id" + id)
-        const newNotes = notes.filter((note) => { return note._id !== id })
-        setNotes(newNotes)
+        try {
+            // API Call
+            const response = await fetch(`${host}/api/clients/deleteclients/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": localStorage.getItem('token')
+                },
+            });
+            const json = await response.json();
+            console.log(json);
+            if (response.ok) {
+                console.log("deleting client with id " + id);
+                const newNotes = notes.filter((note) => { return note._id !== id });
+                setNotes(newNotes);
+            } else {
+                // Handle error response
+                console.error("Failed to delete client:", json.error);
+            }
+        } catch (error) {
+            console.error("Error deleting client:", error.message);
+        }
     }
-
 
 
     return (
         <NoteContext.Provider value={{
             notes,
-            addNote,
-            editNote,
-            deleteNote,
-            getNotes,
-            getWelcome,
-            addWelcome,
-            editWelcome,
-            deleteWelcome,
             getService,
             addService,
             editService,

@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import NoteContext from "../../Context/Banner/NoteContext";
 import { useNavigate } from "react-router-dom";
-import Card from "../../Component/Card/Card";
-import AddItems from "../../Component/AddItems/AddItems";
 import EditItem from "../../Component/EditItem/EditItem";
 import { MdAdd } from "react-icons/md";
 import AddItems2 from "../../Component/AddItems/AddItems2";
@@ -32,8 +30,6 @@ const Services = (props) => {
   const [note, setNote] = useState({
     id: "",
     etitle: "",
-    edescription: "",
-    etag: "",
   });
 
   const updateNote = (currentNote) => {
@@ -41,13 +37,11 @@ const Services = (props) => {
     setNote({
       id: currentNote._id,
       etitle: currentNote.title,
-      edescription: currentNote.description,
-      etag: currentNote.tag,
     });
   };
 
   const handleClick = (e) => {
-    editService(note.id, note.etitle, note.edescription, note.etag);
+    editService(note.id, note.etitle, );
     refClose.current.click();
     props.showAlert("Updated successfully", "success");
   };

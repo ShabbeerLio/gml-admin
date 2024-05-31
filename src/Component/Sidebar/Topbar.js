@@ -53,7 +53,7 @@ const Topbar = () => {
                     <Divider />
                     <Box sx={{ p: 2 }}>
                         <Typography variant="body1" textAlign="center">
-                            John Doe {/* Replace with dynamic name if needed */}
+                            Administrator {/* Replace with dynamic name if needed */}
                         </Typography>
                     </Box>
                     <Box sx={{ p: 2, display: 'flex', justifyContent: 'center' ,width:"100%"}}>

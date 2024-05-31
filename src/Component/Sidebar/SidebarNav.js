@@ -4,12 +4,10 @@ import { Box, IconButton, Typography } from "@mui/material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import {
-  HomeOutlined as HomeOutlinedIcon,
-  PersonOutlined as PersonOutlinedIcon,
-  CalendarTodayOutlined as CalendarTodayOutlinedIcon,
-  HelpOutlineOutlined as HelpOutlineOutlinedIcon,
   MenuOutlined as MenuOutlinedIcon
 } from '@mui/icons-material';
+import { MdDesignServices } from "react-icons/md";
+import { LuLanguages } from "react-icons/lu";
 import logo from "../../Assets/logo2.jpg";
 import "./SidebarNav.css";
 
@@ -112,65 +110,22 @@ const SidebarNav = () => {
             )}
           </MenuItem>
 
-          {/* {!isCollapsed && (
-            <Box mb="25px">
-              <Box textAlign="center">
-                <Typography>
-                  Add additional content if needed
-                </Typography>
-              </Box>
-            </Box>
-          )} */}
-
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
-              title="Banner"
-              to="/"
-              icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Welcome to"
-              to="/welcome-to"
-              icon={<CalendarTodayOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
               title="Our Services"
-              to="/our-services"
-              icon={<HelpOutlineOutlinedIcon />}
+              to="/"
+              icon={<MdDesignServices />}
               selected={selected}
               setSelected={setSelected}
+              className="sidenav-icon"
             />
             <Item
-              title="Certified"
-              to="/certified"
-              icon={<HelpOutlineOutlinedIcon />}
+              title="Languages"
+              to="/languages"
+              icon={<LuLanguages/>}
               selected={selected}
               setSelected={setSelected}
-            />
-              <Item
-                title="Clients"
-                to="/clients"
-                icon={<HelpOutlineOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-            <Item
-              title="Customers"
-              to="/customers"
-              icon={<HelpOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Blog"
-              to="/blog"
-              icon={<HelpOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+              className="sidenav-icon"
             />
           </Box>
         </Menu>
