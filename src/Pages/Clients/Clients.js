@@ -8,12 +8,12 @@ import EditItem2 from "../../Component/EditItem/EditItem2";
 
 const Clients = (props) => {
   const context = useContext(NoteContext);
-  const { notes, getClients, addClients, editClients, deleteClients } = context;
+  const { notes, getClients, addClients, editClients, deleteClients, addSubcategory, editSubcategory, deleteSubcategory } = context;
   const [loading, setLoading] = useState(false);
   const [note, setNote] = useState({
     id: "",
     ecategory: "",
-    esubcategories: "",
+    esubcategories: [],
   });
 
   const ref = useRef(null);
@@ -37,12 +37,12 @@ const Clients = (props) => {
     setNote({
       id: currentNote._id,
       ecategory: currentNote.category,
-      esubcategories: currentNote.subcategories.join(', '),
+      esubcategories: currentNote.subcategories,
     });
   };
 
   const handleClick = (e) => {
-    editClients(note.id, note.ecategory, note.esubcategories.split(',').map(sub => sub.trim()));
+    editClients(note.id, note.ecategory, note.esubcategories);
     refClose.current.click();
     props.showAlert("Updated successfully", "success");
   };
@@ -55,6 +55,7 @@ const Clients = (props) => {
     <>
       <div className="banner">
         <div className="banner-button">
+          <h2>Languages</h2>
           <button
             type="button"
             className="btn btn-primary d-flex align-items-center"
@@ -76,7 +77,7 @@ const Clients = (props) => {
         </button>
         <EditItem2 onChange={onChange} note={note} refClose={refClose} handleClick={handleClick} />
         <div className="row my-3">
-          <h2>Languages</h2>
+
           <div className="container mx-2">
             {loading ? "Loading..." : (notes.length === 0 && "No Items to display")}
           </div>

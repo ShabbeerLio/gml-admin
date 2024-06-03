@@ -54,6 +54,7 @@ const Services = (props) => {
     <>
       <div className="banner">
         <div className="banner-button">
+        <h2>Services</h2>
           <button
             type="button"
             className="btn btn-primary d-flex align-items-center"
@@ -75,7 +76,6 @@ const Services = (props) => {
         </button>
         <EditItem onChange={onChange} note={note} refClose={refClose} handleClick={handleClick} />
         <div className="row my-3">
-          <h2>Services</h2>
           <div className="container mx-2">
             {notes.length === 0 && "No Items to display"}
           </div>

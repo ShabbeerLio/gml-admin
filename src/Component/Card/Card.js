@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Subcategories from "../Subcategories/Subcategories";
 import { MdDelete, MdEdit } from "react-icons/md";
 import "./Card.css"
+import Card3 from "./Card3";
+import NoteContext from "../../Context/Banner/NoteContext";
 
-const Card = ({ note,index, deleteItem, updateNote, showAlert }) => {
+const Card = ({ note, index, deleteItem, updateNote, showAlert }) => {
+
+    const context = useContext(NoteContext);
+    const { addSubcategory, editSubcategory, deleteSubcategory } = context;
     const [showSubcategories, setShowSubcategories] = useState(false);
 
     const handleViewClick = () => {
@@ -28,11 +33,13 @@ const Card = ({ note,index, deleteItem, updateNote, showAlert }) => {
                 </td>
             </tr>
             {showSubcategories && (
-                <tr>
-                    <td colSpan="3">
-                        <Subcategories note={note} showAlert={showAlert} />
-                    </td>
-                </tr>
+                <>
+                    <tr className="full-width-row">
+                        <td colspan="4">
+                            <Subcategories note={note} showAlert={showAlert} />
+                        </td>
+                    </tr>
+                </>
             )}
         </>
     );
