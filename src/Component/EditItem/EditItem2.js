@@ -15,17 +15,6 @@ const EditItem2 = ({ onChange, note, refClose, handleClick }) => {
                 <label htmlFor="ecategory" className="form-label">Category</label>
                 <input type="text" className="form-control" id="ecategory" name="ecategory" value={note.ecategory} onChange={onChange} />
               </div>
-              {/* <div className="mb-3">
-                <label htmlFor="esubcategories" className="form-label">Subcategories</label>
-                {note.esubcategories.map((subcategory, index) => (
-                  <div key={index} className="mb-3">
-                    <label htmlFor={`esubcategory-name-${index}`} className="form-label">Subcategory Name</label>
-                    <input type="text" className="form-control" id={`esubcategory-name-${index}`} name="name" value={subcategory.name} readOnly />
-                    <label htmlFor={`esubcategory-description-${index}`} className="form-label">Subcategory Description</label>
-                    <input type="text" className="form-control" id={`esubcategory-description-${index}`} name="description" value={subcategory.description} readOnly />
-                  </div>
-                ))}
-              </div> */}
             </form>
           </div>
           <div className="modal-footer">

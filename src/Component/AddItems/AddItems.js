@@ -54,7 +54,7 @@ const AddItems = ({ addItem, refClose, showAlert }) => {
                   <label htmlFor={`subcategory-name-${index}`} className="form-label">Subcategory Name</label>
                   <input type="text" className="form-control" id={`subcategory-name-${index}`} name="name" value={subcategory.name} onChange={(e) => onChange(e, index, "name")} />
                   <label htmlFor={`subcategory-description-${index}`} className="form-label">Subcategory Description</label>
-                  <input type="text" className="form-control" id={`subcategory-description-${index}`} name="description" value={subcategory.description} onChange={(e) => onChange(e, index, "description")} />
+                  <textarea  className="form-control" id={`subcategory-description-${index}`} name="description" value={subcategory.description} onChange={(e) => onChange(e, index, "description")} />
                   <button type="button" className="btn btn-danger mt-2" onClick={() => removeSubcategoryField(index)}>Remove</button>
                 </div>
               ))}

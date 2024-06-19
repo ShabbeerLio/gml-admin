@@ -5,7 +5,7 @@ import logo from "../../Assets/logo2.jpg"
 
 const Login = (props) => {
 
-    const host = "http://localhost:8000"
+    const host = "https://gml-backend.onrender.com"
     const [credentials, setCredentials] = useState({ email: "", password: "" })
     let history = useNavigate();
 

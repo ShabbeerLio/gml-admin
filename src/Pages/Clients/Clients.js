@@ -8,8 +8,8 @@ import EditItem2 from "../../Component/EditItem/EditItem2";
 
 const Clients = (props) => {
   const context = useContext(NoteContext);
-  const { notes, getClients, addClients, editClients, deleteClients, addSubcategory, editSubcategory, deleteSubcategory } = context;
-  const [loading, setLoading] = useState(false);
+  const { notes, getClients, addClients, editClients, deleteClients } = context;
+  const [loading, setLoading] = useState(true);
   const [note, setNote] = useState({
     id: "",
     ecategory: "",
@@ -22,7 +22,7 @@ const Clients = (props) => {
 
   useEffect(() => {
     const fetchClients = async () => {
-      if (localStorage.getItem('token')) {
+      if (localStorage.getItem("token")) {
         await getClients();
         setLoading(false);
       } else {
@@ -77,7 +77,6 @@ const Clients = (props) => {
         </button>
         <EditItem2 onChange={onChange} note={note} refClose={refClose} handleClick={handleClick} />
         <div className="row my-3">
-
           <div className="container mx-2">
             {loading ? "Loading..." : (notes.length === 0 && "No Items to display")}
           </div>
@@ -91,9 +90,16 @@ const Clients = (props) => {
               </tr>
             </thead>
             <tbody>
-              {notes.map((note, index) => {
-                return <Card key={note._id} index={index} deleteItem={deleteClients} updateNote={updateNote} showAlert={props.showAlert} note={note} />;
-              })}
+              {notes && notes.map((note, index) => (
+                note && <Card
+                  key={note._id}
+                  index={index}
+                  deleteItem={deleteClients}
+                  updateNote={updateNote}
+                  showAlert={props.showAlert}
+                  note={note}
+                />
+              ))}
             </tbody>
           </table>
         </div>

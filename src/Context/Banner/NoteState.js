@@ -3,7 +3,7 @@ import NoteContext from "./NoteContext";
 import { useState } from "react";
 
 const NoteState = (props) => {
-    const host = "http://localhost:8000"
+    const host = "https://gml-backend.onrender.com"
 
     const notesData = []
 
@@ -268,9 +268,14 @@ const NoteState = (props) => {
                 throw new Error(json.error || 'Failed to delete subcategory');
             }
 
-            const updatedClient = await response.json();
-            setNotes(prevNotes => prevNotes.map(note => note._id === clientId ? updatedClient.client : note));
-            console.log("Subcategory deleted successfully", "success");
+            // Update state to remove the deleted subcategory
+            setNotes(prevNotes =>
+                prevNotes.map(note =>
+                    note._id === clientId
+                        ? { ...note, subcategories: note.subcategories.filter(sub => sub._id !== subcategoryId) }
+                        : note
+                )
+            );
         } catch (error) {
             console.error("Error deleting subcategory:", error.message);
             // showAlert("Failed to delete subcategory", "error");

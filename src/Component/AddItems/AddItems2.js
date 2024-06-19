@@ -4,7 +4,6 @@ import "./AddItems.css";
 import axios from "axios";
 
 const AddItems2 = (props) => {
-    const host = "http://localhost:8000";
     const { addItem } = props;
     const [note, setNote] = useState({ title: "", imageUrl: "" });
     const [image, setImage] = useState(null);

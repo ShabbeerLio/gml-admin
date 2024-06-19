@@ -1,19 +1,19 @@
-import React from 'react'
+import React from 'react';
 
 const EditItem = (props) => {
     return (
         <>
             <div
                 className="modal fade"
-                id="exampleModal"
+                id="exampleModal1"
                 tabIndex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
             >
                 <div className="modal-dialog">
-                    <div className="modal-content" >
+                    <div className="modal-content">
                         <div className="modal-header" style={{ borderBottom: "1px solid #3c3c3c" }}>
-                            <h5 className="modal-title" id="exampleModalLabel" >
+                            <h5 className="modal-title" id="exampleModalLabel">
                                 Edit Item
                             </h5>
                             <button
@@ -32,12 +32,10 @@ const EditItem = (props) => {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        // style={{ color: "white", backgroundColor: "#424242", border: "none" }}
                                         id="etitle"
                                         name="etitle"
-                                        aria-describedby="emailHelp"
                                         onChange={props.onChange}
-                                        minLength={5}
+                                        minLength={3}
                                         required
                                         value={props.note.etitle}
                                     />
@@ -46,14 +44,14 @@ const EditItem = (props) => {
                                     <label htmlFor="edescription" className="form-label">
                                         Description
                                     </label>
-                                    <input
-                                        type="text"
+                                    <textarea
+                                        // type="text"
                                         className="form-control"
-                                        // style={{ color: "white", backgroundColor: "#424242", border: "none" }}
                                         name="edescription"
                                         id="edescription"
                                         onChange={props.onChange}
-                                        minLength={5}
+                                        minLength={3}
+                                        value={props.note.edescription}
                                     />
                                 </div>
                             </form>
@@ -68,7 +66,6 @@ const EditItem = (props) => {
                                 Close
                             </button>
                             <button
-                                // disabled={props.note.etitle.length < 5 }
                                 onClick={props.handleClick}
                                 type="button"
                                 className="update-button"
@@ -81,7 +78,7 @@ const EditItem = (props) => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default EditItem
+export default EditItem;

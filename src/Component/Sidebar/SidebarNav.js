@@ -38,7 +38,7 @@ const SidebarNav = () => {
   };
 
   // API
-  const host = "http://localhost:8000";
+  const host = "https://gml-backend.onrender.com";
   const [userData, setUserData] = useState([null])
 
   useEffect(() => {
