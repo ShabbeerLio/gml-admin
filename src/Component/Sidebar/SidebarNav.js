@@ -29,39 +29,7 @@ const SidebarNav = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
 
-  let location = useLocation();
-  let history = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    history("/login");
-  };
-
-  // API
-  const host = "https://gml-backend.onrender.com";
-  const [userData, setUserData] = useState([null])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`${host}/api/auth/getuser`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-        },
-        body: JSON.stringify(),
-      });
-      const json = await response.json();
-      setUserData(json);
-      if (json.success) {
-        // Save the auth token and redirect
-        localStorage.setItem("token", json.authToken);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  
   return (
     <Box
       sx={{

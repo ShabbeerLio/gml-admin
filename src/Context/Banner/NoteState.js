@@ -3,7 +3,7 @@ import NoteContext from "./NoteContext";
 import { useState } from "react";
 
 const NoteState = (props) => {
-    const host = "https://gml-backend.onrender.com"
+    const host = "https://gmls-backend.onrender.com"
 
     const notesData = []
 
@@ -92,7 +92,7 @@ const NoteState = (props) => {
 
 
     // ................................. Languages.......................................//
-    // Get all Clients
+    // Get all Languages
     const getClients = async () => {
         try {
             const response = await fetch(`${host}/api/clients/fetchallclients`, {
