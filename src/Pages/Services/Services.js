@@ -70,7 +70,7 @@ const Services = (props) => {
           type="button"
           className="btn btn-primary d-none"
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+          data-bs-target="#exampleModal1"
           ref={ref}
         >
         </button>

@@ -94,7 +94,6 @@ const NoteState = (props) => {
     // ................................. Languages.......................................//
     // Get all Languages
     const getClients = async () => {
-        try {
             const response = await fetch(`${host}/api/clients/fetchallclients`, {
                 method: "GET",
                 headers: {
@@ -102,15 +101,8 @@ const NoteState = (props) => {
                     "auth-token": localStorage.getItem('token')
                 },
             });
-            if (!response.ok) {
-                throw new Error('Failed to fetch clients');
-            }
-            const json = await response.json();
-            setNotes(json);
-        } catch (error) {
-            console.error("Error fetching clients:", error.message);
-            // showAlert("Failed to fetch clients", "error");
-        }
+            const json = await response.json()
+            setNotes(json)
     };
 
     // Add Clients
