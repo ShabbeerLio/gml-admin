@@ -9,6 +9,7 @@ import Topbar from "./Component/Sidebar/Topbar";
 import Services from "./Pages/Services/Services";
 import Clients from "./Pages/Clients/Clients";
 import NoteState from "./Context/Banner/NoteState";
+import Blogs from "./Pages/Blogs/Blogs";
 
 function App() {
   const [isSidebar, setIsSidebar] = useState(true);
@@ -38,6 +39,7 @@ function App() {
                 {/* <Route path="/" exact element={<Banner showAlert={showAlert} />} /> */}
                 <Route path="/" exact element={<Services showAlert={showAlert} />} />
                 <Route path="/languages" exact element={<Clients showAlert={showAlert} />} />
+                <Route path="/blogs" exact element={<Blogs showAlert={showAlert} />} />
               </Routes>
             </div>
           </div>

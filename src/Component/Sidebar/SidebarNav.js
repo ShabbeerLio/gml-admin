@@ -95,6 +95,14 @@ const SidebarNav = () => {
               setSelected={setSelected}
               className="sidenav-icon"
             />
+            <Item
+              title="Blogs"
+              to="/blogs"
+              icon={<LuLanguages/>}
+              selected={selected}
+              setSelected={setSelected}
+              className="sidenav-icon"
+            />
           </Box>
         </Menu>
       </ProSidebar>

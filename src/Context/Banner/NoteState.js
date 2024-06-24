@@ -3,7 +3,7 @@ import NoteContext from "./NoteContext";
 import { useState } from "react";
 
 const NoteState = (props) => {
-    const host = "https://gmls-backend.onrender.com"
+    const host = "http://localhost:8000"
 
     const notesData = []
 
@@ -94,15 +94,15 @@ const NoteState = (props) => {
     // ................................. Languages.......................................//
     // Get all Languages
     const getClients = async () => {
-            const response = await fetch(`${host}/api/clients/fetchallclients`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "auth-token": localStorage.getItem('token')
-                },
-            });
-            const json = await response.json()
-            setNotes(json)
+        const response = await fetch(`${host}/api/clients/fetchallclients`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": localStorage.getItem('token')
+            },
+        });
+        const json = await response.json()
+        setNotes(json)
     };
 
     // Add Clients
@@ -275,6 +275,191 @@ const NoteState = (props) => {
     };
 
 
+    // ................................. Blogs.......................................//
+    // Get all Blog 
+    const getBlogs = async () => {
+        const response = await fetch(`${host}/api/blog/fetchallblog`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": localStorage.getItem('token')
+            },
+        });
+        const json = await response.json()
+        setNotes(json)
+    };
+
+    // Add Blog
+    const addBlogs = async (category, subcategories) => {
+        try {
+            // Ensure subcategories is an array of objects with name and description
+            const formattedSubcategories = subcategories.map(subcategory => ({
+                name: subcategory.name,
+                description: subcategory.description || '' // Add description if available
+            }));
+
+            const response = await fetch(`${host}/api/blog/addblog`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": localStorage.getItem('token')
+                },
+                body: JSON.stringify({ category, subcategories: formattedSubcategories })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to add client');
+            }
+
+            const client = await response.json();
+            setNotes(prevNotes => [...prevNotes, client]);
+            console.log("Blog added successfully", "success");
+        } catch (error) {
+            console.error("Error adding Blog:", error.message);
+            // showAlert("Failed to add client", "error");
+        }
+    };
+
+    // Edit Blog
+    const editBlogs = async (id, category, subcategories) => {
+        try {
+            // Ensure subcategories is an array of objects with name and description
+            const formattedSubcategories = subcategories.map(sub => ({
+                name: sub.name,
+                description: sub.description || ''
+            }));
+
+            const response = await fetch(`${host}/api/blog/updateblog/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "auth-token": localStorage.getItem('token')
+                },
+                body: JSON.stringify({ category, subcategories: formattedSubcategories })
+            });
+
+            if (!response.ok) {
+                const json = await response.json();
+                throw new Error(json.error || 'Failed to edit Blog');
+            }
+
+            const updatedClient = await response.json();
+            setNotes(prevNotes => prevNotes.map(note => note._id === id ? updatedClient.client : note));
+            console.log("Blog edited successfully", "success");
+        } catch (error) {
+            console.error("Error editing Blog :", error.message);
+            // showAlert("Failed to edit client", "error");
+        }
+    };
+
+    // Delete Blog 
+    const deleteBlogs = async (id) => {
+        try {
+            const response = await fetch(`${host}/api/blog/deleteblog/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": localStorage.getItem('token')
+                },
+            });
+
+            if (!response.ok) {
+                const json = await response.json();
+                throw new Error(json.error || 'Failed to delete Blog ');
+            }
+
+            const deletedClient = await response.json();
+            setNotes(prevNotes => prevNotes.filter(note => note._id !== id));
+            console.log("Blog deleted successfully", "success");
+        } catch (error) {
+            console.error("Error deleting Blog :", error.message);
+            // showAlert("Failed to delete client", "error");
+        }
+    };
+
+    // Add Blog detail
+    const addBlogsSubcategory = async (clientId, name, description) => {
+        try {
+            const response = await fetch(`${host}/api/blog/${clientId}/subcategories`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": localStorage.getItem('token')
+                },
+                body: JSON.stringify({ name, description })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to add Blog detail');
+            }
+
+            const updatedClient = await response.json();
+            setNotes(prevNotes => prevNotes.map(note => note._id === clientId ? updatedClient.client : note));
+            console.log("Blog detail added successfully", "success");
+        } catch (error) {
+            console.error("Error adding Blog detail:", error.message);
+            // showAlert("Failed to add subcategory", "error");
+        }
+    };
+
+    // Edit Blog detail
+    const editBlogsSubcategory = async (clientId, subcategoryId, name, description) => {
+        try {
+            const response = await fetch(`${host}/api/blog/${clientId}/subcategories/${subcategoryId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "auth-token": localStorage.getItem('token')
+                },
+                body: JSON.stringify({ name, description })
+            });
+
+            if (!response.ok) {
+                const json = await response.json();
+                throw new Error(json.error || 'Failed to edit Blog detail');
+            }
+
+            const updatedClient = await response.json();
+            setNotes(prevNotes => prevNotes.map(note => note._id === clientId ? updatedClient.client : note));
+            console.log("Blog detail edited successfully", "success");
+        } catch (error) {
+            console.error("Error editing Blog detail:", error.message);
+            // showAlert("Failed to edit subcategory", "error");
+        }
+    };
+
+    // Delete Blog detail
+    const deleteBlogsSubcategory = async (clientId, subcategoryId) => {
+        try {
+            const response = await fetch(`${host}/api/blog/${clientId}/subcategories/${subcategoryId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "auth-token": localStorage.getItem('token')
+                }
+            });
+
+            if (!response.ok) {
+                const json = await response.json();
+                throw new Error(json.error || 'Failed to delete Blog detail');
+            }
+
+            // Update state to remove the deleted subcategory
+            setNotes(prevNotes =>
+                prevNotes.map(note =>
+                    note._id === clientId
+                        ? { ...note, subcategories: note.subcategories.filter(sub => sub._id !== subcategoryId) }
+                        : note
+                )
+            );
+        } catch (error) {
+            console.error("Error deleting Blog detail:", error.message);
+            // showAlert("Failed to delete subcategory", "error");
+        }
+    };
+
+
+
 
     return (
         <NoteContext.Provider value={{
@@ -290,6 +475,13 @@ const NoteState = (props) => {
             addSubcategory,
             editSubcategory,
             deleteSubcategory,
+            getBlogs,
+            addBlogs,
+            editBlogs,
+            deleteBlogs,
+            addBlogsSubcategory,
+            editBlogsSubcategory,
+            deleteBlogsSubcategory
         }}>
             {props.children}
         </NoteContext.Provider>
