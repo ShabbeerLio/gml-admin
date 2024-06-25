@@ -6,30 +6,26 @@ import { MdAdd } from "react-icons/md";
 import AddItems2 from "../../Component/AddItems/AddItems2";
 import Card2 from "../../Component/Card/Card2";
 
-
 const Services = (props) => {
   const context = useContext(NoteContext);
-  const { notes, getService,
-    addService,
-    editService,
-    deleteService, } = context;
+  const { notes, getService, addService, editService, deleteService } = context;
   let history = useNavigate();
-
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      getService()
-    }
-    else {
-      history("/login")
+      getService();
+    } else {
+      history("/login");
     }
     // eslint-disable-next-line
   }, []);
+
   const ref = useRef(null);
   const refClose = useRef(null);
   const [note, setNote] = useState({
     id: "",
     etitle: "",
+    eimage: null,
   });
 
   const updateNote = (currentNote) => {
@@ -37,11 +33,13 @@ const Services = (props) => {
     setNote({
       id: currentNote._id,
       etitle: currentNote.title,
+      eimage: null,
     });
   };
 
   const handleClick = (e) => {
-    editService(note.id, note.etitle, );
+    e.preventDefault();
+    editService(note.id, note.etitle, note.eimage);
     refClose.current.click();
     props.showAlert("Updated successfully", "success");
   };
@@ -50,11 +48,15 @@ const Services = (props) => {
     setNote({ ...note, [e.target.name]: e.target.value });
   };
 
+  const onImageChange = (e) => {
+    setNote({ ...note, eimage: e.target.files[0] });
+  };
+
   return (
     <>
       <div className="banner">
         <div className="banner-button">
-        <h2>Services</h2>
+          <h2>Services</h2>
           <button
             type="button"
             className="btn btn-primary d-flex align-items-center"
@@ -74,7 +76,13 @@ const Services = (props) => {
           ref={ref}
         >
         </button>
-        <EditItem onChange={onChange} note={note} refClose={refClose} handleClick={handleClick} />
+        <EditItem
+          onChange={onChange}
+          note={note}
+          refClose={refClose}
+          handleClick={handleClick}
+          onImageChange={onImageChange}
+        />
         <div className="row my-3">
           <div className="container mx-2">
             {notes.length === 0 && "No Items to display"}

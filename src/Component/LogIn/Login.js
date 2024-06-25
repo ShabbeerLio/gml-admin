@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import "./Login.css"
 import logo from "../../Assets/logo2.jpg"
+import host from '../../Host/Host'
 
 const Login = (props) => {
 
-    const host = "http://localhost:8000"
     const [credentials, setCredentials] = useState({ email: "", password: "" })
     let history = useNavigate();
 

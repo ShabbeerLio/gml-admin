@@ -8,6 +8,7 @@
   width: 100%;
   object-fit: cover;
   border-radius: 8px 8px 0px 0px;
+  aspect-ratio: 2/1;
 }
 
 .card-title {
@@ -59,10 +60,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem 0rem 1rem 0rem;
-}
-.card-image img{
-   width: 20%;
+    /* padding: 2rem 0rem 1rem 0rem; */
 }
 
 .card2-button{

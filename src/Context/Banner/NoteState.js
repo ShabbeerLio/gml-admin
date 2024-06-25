@@ -1,9 +1,9 @@
 import react from "react"
 import NoteContext from "./NoteContext";
 import { useState } from "react";
+import host from "../../Host/Host";
 
 const NoteState = (props) => {
-    const host = "http://localhost:8000"
 
     const notesData = []
 
@@ -28,49 +28,57 @@ const NoteState = (props) => {
     }
 
     // Add Services
-    const addService = async (title) => {
-        // API Call
 
+    const addService = async (title, image) => {
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('image', image);
+    
         const response = await fetch(`${host}/api/service/addservice`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
                 "auth-token": localStorage.getItem('token')
             },
-            body: JSON.stringify({ title })
+            body: formData
         });
+    
         const note = await response.json();
-        setNotes(notes.concat(note))
+        setNotes(notes.concat(note));
         // console.log("adding a new note")
-
     }
+    
 
     // Edit Services
 
-    const editService = async (id, title,) => {
-        // API Call 
+    const editService = async (id, title, image) => {
+        const formData = new FormData();
+        formData.append('title', title);
+        if (image) formData.append('image', image);
+    
         const response = await fetch(`${host}/api/service/updateservice/${id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
                 "auth-token": localStorage.getItem('token')
             },
-            body: JSON.stringify({ title })
+            body: formData
         });
+    
         const json = await response.json();
-        console.log(json)
-
-        let newNotes = JSON.parse(JSON.stringify(notes))
+        console.log(json);
+    
+        let newNotes = JSON.parse(JSON.stringify(notes));
         // Logic to edit in client
         for (let index = 0; index < newNotes.length; index++) {
             const element = newNotes[index];
             if (element._id === id) {
                 newNotes[index].title = title;
+                if (json.imageUrl) newNotes[index].imageUrl = json.imageUrl;
                 break;
             }
         }
         setNotes(newNotes);
-    }
+    };
+    
 
     // Delete Services
     const deleteService = async (id) => {

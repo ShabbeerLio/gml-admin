@@ -1,38 +1,24 @@
 import React, { useState } from 'react';
 import { MdAdd } from "react-icons/md";
-import "./AddItems.css";
 import axios from "axios";
+import "./AddItems.css";
 
 const AddItems2 = (props) => {
     const { addItem } = props;
-    const [note, setNote] = useState({ title: "", image: null });
+    const [note, setNote] = useState({ title: "" });
+    const [image, setImage] = useState(null);
 
     const handleImageChange = (e) => {
-        setNote({
-            ...note,
-            image: e.target.files[0]
-        });
+        setImage(e.target.files[0]);
     };
 
     const handleClick = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        console.log(formData,"data")
-        formData.append("title", note.title);
-        formData.append("image", note.image);
-
         try {
-            const response = await axios.post('http://localhost:8000/api/service/addservice', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'auth-token': localStorage.getItem('token')
-                }
-            });
-
-            const savedNote = response.data;
-            addItem(savedNote.title, savedNote.imageUrl);
-            setNote({ title: "", image: null });
+            await addItem(note.title, image);
+            setNote({ title: "" });
+            setImage(null);
             props.showAlert("Added successfully", "success");
         } catch (error) {
             console.error("There was an error uploading the file!", error);
@@ -61,7 +47,6 @@ const AddItems2 = (props) => {
                                         className="form-control"
                                         id="title"
                                         name='title'
-                                        aria-describedby="titleHelp"
                                         onChange={onChange}
                                         value={note.title}
                                         required
@@ -75,6 +60,7 @@ const AddItems2 = (props) => {
                                         id="image"
                                         name="image"
                                         onChange={handleImageChange}
+                                        required
                                     />
                                 </div>
                                 <button disabled={note.title.length < 3} type="submit" className="AddNote-button" onClick={handleClick} data-bs-dismiss="modal" aria-label="Close" ref={props.refClose}>

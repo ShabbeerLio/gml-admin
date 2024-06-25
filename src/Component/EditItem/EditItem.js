@@ -41,17 +41,15 @@ const EditItem = (props) => {
                                     />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="edescription" className="form-label">
-                                        Description
+                                    <label htmlFor="eimage" className="form-label">
+                                        Upload Image
                                     </label>
-                                    <textarea
-                                        // type="text"
+                                    <input
+                                        type="file"
                                         className="form-control"
-                                        name="edescription"
-                                        id="edescription"
-                                        onChange={props.onChange}
-                                        minLength={3}
-                                        value={props.note.edescription}
+                                        id="eimage"
+                                        name="eimage"
+                                        onChange={props.onImageChange}
                                     />
                                 </div>
                             </form>
