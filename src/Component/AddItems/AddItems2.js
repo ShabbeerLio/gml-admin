@@ -5,42 +5,38 @@ import axios from "axios";
 
 const AddItems2 = (props) => {
     const { addItem } = props;
-    const [note, setNote] = useState({ title: "", imageUrl: "" });
-    const [image, setImage] = useState(null);
-    const [imgFile, setImgFile] = useState('');
+    const [note, setNote] = useState({ title: "", image: null });
 
     const handleImageChange = (e) => {
-        setImage(e.target.files[0]);
-        console.log(image)
+        setNote({
+            ...note,
+            image: e.target.files[0]
+        });
     };
 
     const handleClick = async (e) => {
         e.preventDefault();
-        let imageUrl = note.imageUrl;
 
-        if (image) {
-            const formData = new FormData();
-            for(var x = 0; x<image.length; x++) {
-                formData.append('file', image[x])
-            }
-            axios.post("http://localhost:5000/public/upload", formData)
-            .then(res => { 
-                setImgFile('http://localhost:5000/public/images/'+res.formData.filename)
-              })
-            // formData.append('file', image);
-            // const response = await fetch(`${host}/api/upload`, {
-            //     method: 'POST',
-            //     body: formData,
-            // });
+        const formData = new FormData();
+        console.log(formData,"data")
+        formData.append("title", note.title);
+        formData.append("image", note.image);
 
-            // const data = await response.json();
-            // imageUrl = data.url;
+        try {
+            const response = await axios.post('http://localhost:8000/api/service/addservice', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'auth-token': localStorage.getItem('token')
+                }
+            });
+
+            const savedNote = response.data;
+            addItem(savedNote.title, savedNote.imageUrl);
+            setNote({ title: "", image: null });
+            props.showAlert("Added successfully", "success");
+        } catch (error) {
+            console.error("There was an error uploading the file!", error);
         }
-
-        addItem(note.title, imageUrl);
-        setNote({ title: "", imageUrl: "" });
-        setImage(null);
-        props.showAlert("Added successfully", "success");
     };
 
     const onChange = (e) => {

@@ -60,7 +60,7 @@ const Clients = (props) => {
     <>
       <div className="banner">
         <div className="banner-button">
-          <h2>Languages</h2>
+          <h2>Blogs</h2>
           <button
             type="button"
             className="btn btn-primary d-flex align-items-center"
@@ -68,7 +68,7 @@ const Clients = (props) => {
             data-bs-target="#staticBackdrop"
             ref={ref}
           >
-            <MdAdd /> Add Languages
+            <MdAdd /> Add Blog
           </button>
         </div>
         <AddItems addItem={addBlogs} refClose={refClose} showAlert={props.showAlert} />
@@ -89,7 +89,7 @@ const Clients = (props) => {
             <thead>
               <tr>
                 <th scope="col">S.No</th>
-                <th scope="col">Blog</th>
+                <th scope="col">Heading</th>
                 <th scope="col">Actions</th>
                 <th scope="col">Blog Detail</th>
               </tr>
