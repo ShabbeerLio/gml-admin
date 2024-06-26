@@ -33,7 +33,7 @@ const NoteState = (props) => {
         const formData = new FormData();
         formData.append('title', title);
         formData.append('image', image);
-    
+
         const response = await fetch(`${host}/api/service/addservice`, {
             method: "POST",
             headers: {
@@ -41,12 +41,12 @@ const NoteState = (props) => {
             },
             body: formData
         });
-    
+
         const note = await response.json();
         setNotes(notes.concat(note));
         // console.log("adding a new note")
     }
-    
+
 
     // Edit Services
 
@@ -54,7 +54,7 @@ const NoteState = (props) => {
         const formData = new FormData();
         formData.append('title', title);
         if (image) formData.append('image', image);
-    
+
         const response = await fetch(`${host}/api/service/updateservice/${id}`, {
             method: 'PUT',
             headers: {
@@ -62,10 +62,10 @@ const NoteState = (props) => {
             },
             body: formData
         });
-    
+
         const json = await response.json();
         console.log(json);
-    
+
         let newNotes = JSON.parse(JSON.stringify(notes));
         // Logic to edit in client
         for (let index = 0; index < newNotes.length; index++) {
@@ -78,7 +78,7 @@ const NoteState = (props) => {
         }
         setNotes(newNotes);
     };
-    
+
 
     // Delete Services
     const deleteService = async (id) => {
@@ -293,74 +293,61 @@ const NoteState = (props) => {
                 "auth-token": localStorage.getItem('token')
             },
         });
-        const json = await response.json()
-        setNotes(json)
+        const json = await response.json();
+        setNotes(json);
     };
 
-    // Add Blog
-    const addBlogs = async (category, subcategories) => {
+    // Add Blogs
+    const addBlogs = async (category, subcategories, image) => {
         try {
-            // Ensure subcategories is an array of objects with name and description
-            const formattedSubcategories = subcategories.map(subcategory => ({
-                name: subcategory.name,
-                description: subcategory.description || '' // Add description if available
-            }));
+            const formData = new FormData();
+            formData.append('category', category);
+            formData.append('image', image);
+            formData.append('subcategories', JSON.stringify(subcategories));
 
             const response = await fetch(`${host}/api/blog/addblog`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
                     "auth-token": localStorage.getItem('token')
                 },
-                body: JSON.stringify({ category, subcategories: formattedSubcategories })
+                body: formData
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to add client');
-            }
-
-            const client = await response.json();
-            setNotes(prevNotes => [...prevNotes, client]);
-            console.log("Blog added successfully", "success");
+            const blog = await response.json();
+            setNotes(notes.concat(blog));
         } catch (error) {
-            console.error("Error adding Blog:", error.message);
-            // showAlert("Failed to add client", "error");
+            console.error("Error adding blog:", error.message);
         }
     };
 
-    // Edit Blog
-    const editBlogs = async (id, category, subcategories) => {
+    const editBlogs = async (id, category, subcategories, image) => {
         try {
-            // Ensure subcategories is an array of objects with name and description
-            const formattedSubcategories = subcategories.map(sub => ({
-                name: sub.name,
-                description: sub.description || ''
-            }));
+            const formData = new FormData();
+            formData.append('category', category);
+            if (image) {
+                formData.append('image', image);
+            }
+            formData.append('subcategories', JSON.stringify(subcategories));
 
             const response = await fetch(`${host}/api/blog/updateblog/${id}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',
                     "auth-token": localStorage.getItem('token')
                 },
-                body: JSON.stringify({ category, subcategories: formattedSubcategories })
+                body: formData
             });
 
-            if (!response.ok) {
-                const json = await response.json();
-                throw new Error(json.error || 'Failed to edit Blog');
-            }
+            const json = await response.json();
+            console.log(json);
 
-            const updatedClient = await response.json();
-            setNotes(prevNotes => prevNotes.map(note => note._id === id ? updatedClient.client : note));
+            const updatedBlog = await response.json();
+            setNotes(prevNotes => prevNotes.map(note => note._id === id ? updatedBlog.client : note));
             console.log("Blog edited successfully", "success");
         } catch (error) {
-            console.error("Error editing Blog :", error.message);
-            // showAlert("Failed to edit client", "error");
+            console.error("Error editing blog:", error.message);
         }
     };
 
-    // Delete Blog 
     const deleteBlogs = async (id) => {
         try {
             const response = await fetch(`${host}/api/blog/deleteblog/${id}`, {
@@ -373,70 +360,75 @@ const NoteState = (props) => {
 
             if (!response.ok) {
                 const json = await response.json();
-                throw new Error(json.error || 'Failed to delete Blog ');
+                throw new Error(json.error || 'Failed to delete blog');
             }
 
-            const deletedClient = await response.json();
+            const deletedBlog = await response.json();
             setNotes(prevNotes => prevNotes.filter(note => note._id !== id));
             console.log("Blog deleted successfully", "success");
         } catch (error) {
-            console.error("Error deleting Blog :", error.message);
-            // showAlert("Failed to delete client", "error");
+            console.error("Error deleting blog:", error.message);
         }
     };
 
-    // Add Blog detail
-    const addBlogsSubcategory = async (clientId, name, description) => {
+    // Add Blog detail (Subcategory)
+    const addBlogsSubcategory = async (clientId, name, description, imageFile) => {
         try {
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('image', imageFile);
+
             const response = await fetch(`${host}/api/blog/${clientId}/subcategories`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
                     "auth-token": localStorage.getItem('token')
                 },
-                body: JSON.stringify({ name, description })
+                body: formData
             });
 
             if (!response.ok) {
-                throw new Error('Failed to add Blog detail');
+                throw new Error('Failed to add subcategory');
             }
 
-            const updatedClient = await response.json();
-            setNotes(prevNotes => prevNotes.map(note => note._id === clientId ? updatedClient.client : note));
-            console.log("Blog detail added successfully", "success");
+            const updatedBlog = await response.json();
+            setNotes(prevNotes => prevNotes.map(note => note._id === clientId ? updatedBlog.client : note));
+            console.log("Subcategory added successfully", "success");
         } catch (error) {
-            console.error("Error adding Blog detail:", error.message);
-            // showAlert("Failed to add subcategory", "error");
+            console.error("Error adding subcategory:", error.message);
         }
     };
 
-    // Edit Blog detail
-    const editBlogsSubcategory = async (clientId, subcategoryId, name, description) => {
+    const editBlogsSubcategory = async (clientId, subcategoryId, name, description, imageFile) => {
         try {
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('description', description);
+            if (imageFile) {
+                formData.append('image', imageFile);
+            }
+
             const response = await fetch(`${host}/api/blog/${clientId}/subcategories/${subcategoryId}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',
                     "auth-token": localStorage.getItem('token')
                 },
-                body: JSON.stringify({ name, description })
+                body: formData
             });
 
             if (!response.ok) {
                 const json = await response.json();
-                throw new Error(json.error || 'Failed to edit Blog detail');
+                throw new Error(json.error || 'Failed to edit subcategory');
             }
 
-            const updatedClient = await response.json();
-            setNotes(prevNotes => prevNotes.map(note => note._id === clientId ? updatedClient.client : note));
-            console.log("Blog detail edited successfully", "success");
+            const updatedBlog = await response.json();
+            setNotes(prevNotes => prevNotes.map(note => note._id === clientId ? updatedBlog.client : note));
+            console.log("Subcategory edited successfully", "success");
         } catch (error) {
-            console.error("Error editing Blog detail:", error.message);
-            // showAlert("Failed to edit subcategory", "error");
+            console.error("Error editing subcategory:", error.message);
         }
     };
 
-    // Delete Blog detail
     const deleteBlogsSubcategory = async (clientId, subcategoryId) => {
         try {
             const response = await fetch(`${host}/api/blog/${clientId}/subcategories/${subcategoryId}`, {
@@ -449,10 +441,9 @@ const NoteState = (props) => {
 
             if (!response.ok) {
                 const json = await response.json();
-                throw new Error(json.error || 'Failed to delete Blog detail');
+                throw new Error(json.error || 'Failed to delete subcategory');
             }
 
-            // Update state to remove the deleted subcategory
             setNotes(prevNotes =>
                 prevNotes.map(note =>
                     note._id === clientId
@@ -460,13 +451,11 @@ const NoteState = (props) => {
                         : note
                 )
             );
+            console.log("Subcategory deleted successfully", "success");
         } catch (error) {
-            console.error("Error deleting Blog detail:", error.message);
-            // showAlert("Failed to delete subcategory", "error");
+            console.error("Error deleting subcategory:", error.message);
         }
     };
-
-
 
 
     return (

@@ -5,6 +5,7 @@ import NoteContext from "../../Context/Banner/NoteContext";
 import AddItems3 from "../AddItems/AddItems3";
 import EditItem from "../EditItem/EditItem";
 import Card3 from "../Card/Card3";
+import EditItemSubcategory from "../EditItem/EditItemSubcategory";
 
 const Subcategories = ({ note, showAlert }) => {
     const ref = useRef(null);
@@ -58,7 +59,7 @@ const Subcategories = ({ note, showAlert }) => {
                     ref={ref}
                 >
                 </button>
-                <EditItem
+                <EditItemSubcategory
                     note={editForm}
                     onChange={handleChange}
                     handleClick={handleUpdate}

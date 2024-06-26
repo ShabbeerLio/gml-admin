@@ -9,16 +9,20 @@ import Card2 from "../../Component/Card/Card2";
 const Services = (props) => {
   const context = useContext(NoteContext);
   const { notes, getService, addService, editService, deleteService } = context;
-  let history = useNavigate();
+  const [loading, setLoading] = useState(true);
+  let navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      getService();
-    } else {
-      history("/login");
-    }
-    // eslint-disable-next-line
-  }, []);
+    const fetchClients = async () => {
+      if (localStorage.getItem("token")) {
+        await getService();
+        setLoading(false);
+      } else {
+        navigate("/login");
+      }
+    };
+    fetchClients();
+  }, [navigate, getService]);
 
   const ref = useRef(null);
   const refClose = useRef(null);

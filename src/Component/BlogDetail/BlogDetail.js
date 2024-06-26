@@ -1,9 +1,9 @@
 import React, { useContext, useRef, useState } from "react";
 import { MdAdd } from "react-icons/md";
 import NoteContext from "../../Context/Banner/NoteContext";
-import AddItems3 from "../AddItems/AddItems3";
-import EditItem from "../EditItem/EditItem";
-import Card3 from "../Card/Card3";
+import EditItemBlogDetail from "../EditItem/EditItemBlogDetail";
+import AddItemBlog from "../AddItems/AddItemBlog";
+import CardBlog from "../Card/CardBlog";
 
 const BlogDetail = ({ note, showAlert }) => {
     const ref = useRef(null);
@@ -50,7 +50,7 @@ const BlogDetail = ({ note, showAlert }) => {
                         <MdAdd /> Add Blog Detail
                     </button>
                 </div>
-                <AddItems3 notes={note} addItem={addBlogsSubcategory} refClose={refClose} showAlert={showAlert} />
+                <AddItemBlog notes={note} addItem={addBlogsSubcategory} refClose={refClose} showAlert={showAlert} />
                 <button
                     type="button"
                     className="btn btn-primary d-none"
@@ -59,7 +59,7 @@ const BlogDetail = ({ note, showAlert }) => {
                     ref={ref}
                 >
                 </button>
-                <EditItem
+                <EditItemBlogDetail
                     note={editForm}
                     onChange={handleChange}
                     handleClick={handleUpdate}
@@ -70,7 +70,7 @@ const BlogDetail = ({ note, showAlert }) => {
                         {note.subcategories.length === 0 && "No Items to display"}
                     </div>
                     {note.subcategories.map((subNote) => (
-                        <Card3
+                        <CardBlog
                             key={subNote._id}
                             deleteItem={() => {
                                 deleteBlogsSubcategory(note._id, subNote._id);

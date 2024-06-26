@@ -99,3 +99,9 @@
 .table tr th:nth-child(3){
  text-align: end;
 }
+.table .blog th:nth-child(3){
+ text-align: start;
+}
+.table .blog th:nth-child(4){
+ text-align: end;
+}
