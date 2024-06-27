@@ -1,8 +1,8 @@
 import React, { useContext, useRef, useState } from "react";
 import { MdAdd } from "react-icons/md";
 import NoteContext from "../../Context/Banner/NoteContext";
-import EditItemBlogDetail from "../EditItem/EditItemBlogDetail";
 import AddItemBlog from "../AddItems/AddItemBlog";
+import EditItemBlogDetail from "../EditItem/EditItemBlogDetail";
 import CardBlog from "../Card/CardBlog";
 
 const BlogDetail = ({ note, showAlert }) => {

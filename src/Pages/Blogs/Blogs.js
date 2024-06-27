@@ -1,15 +1,26 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import AddItems1 from "../../Component/AddItems/AddItems1";
-import EditItem1 from "../../Component/EditItem/EditItem1";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import NoteContext from "../../Context/Banner/NoteContext";
-import { MdAdd } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { MdAdd } from "react-icons/md";
+import EditItem1 from "../../Component/EditItem/EditItem1";
 import Card1 from "../../Component/Card/Card1";
+import AddItems1 from "../../Component/AddItems/AddItems1";
 
 const Blogs = (props) => {
   const context = useContext(NoteContext);
-  const { notes, getBlogs, addBlogs, editBlogs, deleteBlogs } = context;
+  const { notes, getBlogs,
+    addBlogs,
+    editBlogs,
+    deleteBlogs } = context;
   const [loading, setLoading] = useState(true);
+  const [note, setNote] = useState({
+    id: "",
+    ecategory: "",
+    esubcategories: [],
+  });
+
+  const ref = useRef(null);
+  const refClose = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,45 +35,30 @@ const Blogs = (props) => {
     fetchClients();
   }, [navigate, getBlogs]);
 
-  const ref = useRef(null);
-  const refClose = useRef(null);
-  const [note, setNote] = useState({
-    id: "",
-    ecategory: "",
-    esubcategories: [],
-    eimage: null,
-  });
-
-
   const updateNote = (currentNote) => {
     ref.current.click();
     setNote({
       id: currentNote._id,
       ecategory: currentNote.category,
       esubcategories: currentNote.subcategories,
-      eimage: null,
     });
   };
 
   const handleClick = (e) => {
-    editBlogs(note.id, note.ecategory, note.esubcategories, note.eimage);
+    editBlogs(note.id, note.ecategory, note.esubcategories);
     refClose.current.click();
     props.showAlert("Updated successfully", "success");
   };
 
   const onChange = (e) => {
-    if (e.target.name === 'image') {
-      setNote({ ...note, image: e.target.files[0] });
-    } else {
-      setNote({ ...note, [e.target.name]: e.target.value });
-    }
+    setNote({ ...note, [e.target.name]: e.target.value });
   };
 
   return (
     <>
       <div className="banner">
         <div className="banner-button">
-          <h2>Blogs</h2>
+          <h2>Languages</h2>
           <button
             type="button"
             className="btn btn-primary d-flex align-items-center"
@@ -70,7 +66,7 @@ const Blogs = (props) => {
             data-bs-target="#staticBackdrop"
             ref={ref}
           >
-            <MdAdd /> Add Blog
+            <MdAdd /> Add Languages
           </button>
         </div>
         <AddItems1 addItem={addBlogs} refClose={refClose} showAlert={props.showAlert} />
@@ -91,7 +87,7 @@ const Blogs = (props) => {
             <thead>
               <tr>
                 <th scope="col">S.No</th>
-                <th scope="col">Heading</th>
+                <th scope="col">Blog</th>
                 <th scope="col">Actions</th>
                 <th scope="col">Blog Detail</th>
               </tr>

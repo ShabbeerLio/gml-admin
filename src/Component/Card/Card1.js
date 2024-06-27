@@ -19,7 +19,6 @@ const Card1 = ({ note, index, deleteItem, updateNote, showAlert }) => {
             <tr className="cards">
                 <td>{index + 1}</td>
                 <td>{note.category}</td>
-                <td>{"Image"}</td>
                 <td>
                     <div className="card2-button">
                         <p onClick={() => updateNote(note)}><MdEdit /></p>
@@ -34,7 +33,7 @@ const Card1 = ({ note, index, deleteItem, updateNote, showAlert }) => {
             </tr>
             {showSubcategories && (
                 <tr className="full-width-row">
-                    <td colSpan="5">
+                    <td colSpan="4">
                         <BlogDetail note={note} showAlert={showAlert} />
                     </td>
                 </tr>
