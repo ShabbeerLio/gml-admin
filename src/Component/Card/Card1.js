@@ -7,18 +7,25 @@ const Card1 = ({ note, index, deleteItem, updateNote, showAlert }) => {
     const [showSubcategories, setShowSubcategories] = useState(false);
 
     if (!note) {
-        return null; 
+        return null;
     }
 
     const handleViewClick = () => {
         setShowSubcategories(!showSubcategories);
     };
 
+    function limitWords(text, limit) {
+        const words = text?.split(' ');
+        return words?.length > limit ? words.slice(0, limit).join(' ') + '...' : text;
+    }
+
     return (
         <>
             <tr className="cards">
                 <td>{index + 1}</td>
-                <td>{note.category}</td>
+                <td>{limitWords(note.category, 5)}</td>
+                <td>{limitWords(note.categorydesc, 5)}</td>
+                <td>{limitWords(note.tag, 5)}</td>
                 <td>
                     <div className="card2-button">
                         <p onClick={() => updateNote(note)}><MdEdit /></p>

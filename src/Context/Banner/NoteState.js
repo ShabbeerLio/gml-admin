@@ -298,7 +298,7 @@ const NoteState = (props) => {
     };
 
     // Add Blog
-    const addBlogs = async (category, subcategories) => {
+    const addBlogs = async (category, categorydesc, tag, subcategories) => {
         try {
             // Ensure subcategories is an array of objects with name and description
             const formattedSubcategories = subcategories.map(subcategory => ({
@@ -312,24 +312,25 @@ const NoteState = (props) => {
                     "Content-Type": "application/json",
                     "auth-token": localStorage.getItem('token')
                 },
-                body: JSON.stringify({ category, subcategories: formattedSubcategories })
+                body: JSON.stringify({ category, categorydesc, tag, subcategories: formattedSubcategories })
             });
 
             if (!response.ok) {
                 throw new Error('Failed to add client');
             }
 
-            const client = await response.json();
-            setNotes(prevNotes => [...prevNotes, client]);
+            const blogs = await response.json();
+            setNotes(prevNotes => [...prevNotes, blogs]);
             console.log("Blog added successfully", "success");
         } catch (error) {
             console.error("Error adding Blog:", error.message);
+            console.log("error")
             // showAlert("Failed to add client", "error");
         }
     };
 
     // Edit Blog
-    const editBlogs = async (id, category, subcategories) => {
+    const editBlogs = async (id, category, categorydesc, tag, subcategories) => {
         try {
             // Ensure subcategories is an array of objects with name and description
             const formattedSubcategories = subcategories.map(sub => ({
@@ -343,7 +344,7 @@ const NoteState = (props) => {
                     'Content-Type': 'application/json',
                     "auth-token": localStorage.getItem('token')
                 },
-                body: JSON.stringify({ category, subcategories: formattedSubcategories })
+                body: JSON.stringify({ category, categorydesc, tag, subcategories: formattedSubcategories })
             });
 
             if (!response.ok) {
@@ -351,8 +352,8 @@ const NoteState = (props) => {
                 throw new Error(json.error || 'Failed to edit Blog');
             }
 
-            const updatedClient = await response.json();
-            setNotes(prevNotes => prevNotes.map(note => note._id === id ? updatedClient.client : note));
+            const updatedBlog = await response.json();
+            setNotes(prevNotes => prevNotes.map(note => note._id === id ? updatedBlog.client : note));
             console.log("Blog edited successfully", "success");
         } catch (error) {
             console.error("Error editing Blog :", error.message);

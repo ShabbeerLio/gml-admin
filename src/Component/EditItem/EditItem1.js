@@ -15,6 +15,14 @@ const EditItem1 = ({ onChange, note, refClose, handleClick }) => {
                 <label htmlFor="ecategory" className="form-label">Category</label>
                 <input type="text" className="form-control" id="ecategory" name="ecategory" value={note.ecategory} onChange={onChange} />
               </div>
+              <div className="mb-3">
+                <label htmlFor="ecategorydesc" className="form-label">Category</label>
+                <input type="text" className="form-control" id="ecategorydesc" name="ecategorydesc" value={note.ecategorydesc} onChange={onChange} />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="etag" className="form-label">Category</label>
+                <input type="text" className="form-control" id="etag" name="etag" value={note.etag} onChange={onChange} />
+              </div>
             </form>
           </div>
           <div className="modal-footer">

@@ -3,14 +3,19 @@ import React, { useState } from "react";
 const AddItems1 = ({ addItem, refClose, showAlert }) => {
     const [note, setNote] = useState({
         category: "",
+        categorydesc: "",
+        tag: "",
         subcategories: [{ name: "", description: "" }],
     });
+    //  console.log (note)
 
     const handleClick = (e) => {
         e.preventDefault();
-        addItem(note.category, note.subcategories);
+        addItem(note.category, note.categorydesc, note.tag, note.subcategories);
         setNote({
             category: "",
+            categorydesc: "",
+            tag: "",
             subcategories: [{ name: "", description: "" }],
         });
         refClose.current.click();
@@ -46,10 +51,18 @@ const AddItems1 = ({ addItem, refClose, showAlert }) => {
                     <div className="modal-body">
                         <form>
                             <div className="mb-3">
-                                <label htmlFor="category" className="form-label">Category</label>
+                                <label htmlFor="category" className="form-label">Blog</label>
                                 <input type="text" className="form-control" id="category" name="category" value={note.category} onChange={(e) => setNote({ ...note, category: e.target.value })} />
                             </div>
-                            {note.subcategories.map((subcategory, index) => (
+                            <div className="mb-3">
+                                <label htmlFor="categorydesc" className="form-label">Blog Description</label>
+                                <input type="text" className="form-control" id="categorydesc" name="categorydesc" value={note.categorydesc} onChange={(e) => setNote({ ...note, categorydesc: e.target.value })} />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="tag" className="form-label">Page Link</label>
+                                <input type="text" className="form-control" id="tag" name="tag" value={note.tag} onChange={(e) => setNote({ ...note, tag: e.target.value })} placeholder="Enter in Lowercase"/>
+                            </div>
+                            {note.subcategories?.map((subcategory, index) => (
                                 <div key={index} className="mb-3">
                                     <label htmlFor={`subcategory-name-${index}`} className="form-label">Subcategory Name</label>
                                     <input type="text" className="form-control" id={`subcategory-name-${index}`} name="name" value={subcategory.name} onChange={(e) => onChange(e, index, "name")} />

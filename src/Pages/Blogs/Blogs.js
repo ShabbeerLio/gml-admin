@@ -16,6 +16,8 @@ const Blogs = (props) => {
   const [note, setNote] = useState({
     id: "",
     ecategory: "",
+    ecategorydesc: "",
+    etag: "",
     esubcategories: [],
   });
 
@@ -40,12 +42,14 @@ const Blogs = (props) => {
     setNote({
       id: currentNote._id,
       ecategory: currentNote.category,
+      ecategorydesc: currentNote.categorydesc,
+      etag: currentNote.tag,
       esubcategories: currentNote.subcategories,
     });
   };
 
   const handleClick = (e) => {
-    editBlogs(note.id, note.ecategory, note.esubcategories);
+    editBlogs(note.id, note.ecategory, note.ecategorydesc, note.etag, note.esubcategories);
     refClose.current.click();
     props.showAlert("Updated successfully", "success");
   };
@@ -58,7 +62,7 @@ const Blogs = (props) => {
     <>
       <div className="banner">
         <div className="banner-button">
-          <h2>Languages</h2>
+          <h2>Blog</h2>
           <button
             type="button"
             className="btn btn-primary d-flex align-items-center"
@@ -66,7 +70,7 @@ const Blogs = (props) => {
             data-bs-target="#staticBackdrop"
             ref={ref}
           >
-            <MdAdd /> Add Languages
+            <MdAdd /> Add Blog
           </button>
         </div>
         <AddItems1 addItem={addBlogs} refClose={refClose} showAlert={props.showAlert} />
@@ -85,9 +89,11 @@ const Blogs = (props) => {
           </div>
           <table className="table">
             <thead>
-              <tr>
+              <tr className="blog">
                 <th scope="col">S.No</th>
                 <th scope="col">Blog</th>
+                <th scope="col">Description</th>
+                <th scope="col">Tag</th>
                 <th scope="col">Actions</th>
                 <th scope="col">Blog Detail</th>
               </tr>

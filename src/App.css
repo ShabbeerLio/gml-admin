@@ -5,7 +5,7 @@
   position: relative;
 }
 
-.content{
+.content {
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -38,7 +38,7 @@
 }
 
 .pro-sidebar .pro-menu .pro-menu-item.active {
-  color:#673de6 !important;
+  color: #673de6 !important;
 }
 
 .pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item:hover {
@@ -54,14 +54,13 @@
   }
 }
 
-
-.banner{
+.banner {
   padding: 2rem;
   background-color: #f1f1f1;
   height: 95%;
   overflow-y: auto;
 }
-.banner button{
+.banner button {
   padding: 10px 20px;
   background-color: #673de6;
   border: none;
@@ -77,11 +76,11 @@
   box-shadow: none;
 }
 
-.btn-primary:active:focus{
+.btn-primary:active:focus {
   box-shadow: none !important;
 }
 
-.banner-button{
+.banner-button {
   width: 100%;
   display: flex;
   align-items: center;
@@ -89,19 +88,22 @@
   margin-bottom: 2rem;
 }
 
-.table{
- background-color: white;
- border-radius: 8px;
+.table {
+  background-color: white;
+  border-radius: 8px;
 }
-.table tr th:last-child{
- text-align: end;
+.table tr th:last-child {
+  text-align: end;
 }
-.table tr th:nth-child(3){
- text-align: end;
+.table tr th:nth-child(3) {
+  text-align: end;
 }
-.table .blog th:nth-child(3){
- text-align: start;
+.table .blog th:nth-child(3) {
+  text-align: start;
 }
-.table .blog th:nth-child(4){
- text-align: end;
+.table .blog th:nth-child(4) {
+  text-align: start;
+}
+.table .blog th:nth-child(5) {
+  text-align: end;
 }
