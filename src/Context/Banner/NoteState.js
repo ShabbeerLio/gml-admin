@@ -298,36 +298,43 @@ const NoteState = (props) => {
     };
 
     // Add Blog
-    const addBlogs = async (category, categorydesc, tag, subcategories) => {
+    const addBlogs = async (category, categorydesc, tag, subcategories, image) => {
         try {
-            // Ensure subcategories is an array of objects with name and description
-            const formattedSubcategories = subcategories.map(subcategory => ({
-                name: subcategory.name,
-                description: subcategory.description || '' // Add description if available
-            }));
-
+            // Create a new FormData instance
+            const formData = new FormData();
+            formData.append("category", category);
+            formData.append("categorydesc", categorydesc);
+            formData.append("tag", tag);
+            subcategories.forEach((subcategory, index) => {
+                formData.append(`subcategories[${index}][name]`, subcategory.name);
+                formData.append(`subcategories[${index}][description]`, subcategory.description || '');
+            });
+            if (image) {
+                formData.append("image", image);
+            }
+    
             const response = await fetch(`${host}/api/blog/addblog`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
                     "auth-token": localStorage.getItem('token')
                 },
-                body: JSON.stringify({ category, categorydesc, tag, subcategories: formattedSubcategories })
+                body: formData
             });
-
+    
             if (!response.ok) {
-                throw new Error('Failed to add client');
+                throw new Error('Failed to add blog');
             }
-
-            const blogs = await response.json();
-            setNotes(prevNotes => [...prevNotes, blogs]);
+    
+            const blog = await response.json();
+            setNotes(prevNotes => [...prevNotes, blog]);
             console.log("Blog added successfully", "success");
         } catch (error) {
-            console.error("Error adding Blog:", error.message);
-            console.log("error")
-            // showAlert("Failed to add client", "error");
+            console.error("Error adding blog:", error.message);
+            console.log("error");
+            // showAlert("Failed to add blog", "error");
         }
     };
+    
 
     // Edit Blog
     const editBlogs = async (id, category, categorydesc, tag, subcategories) => {

@@ -8,21 +8,8 @@ import AddItems1 from "../../Component/AddItems/AddItems1";
 
 const Blogs = (props) => {
   const context = useContext(NoteContext);
-  const { notes, getBlogs,
-    addBlogs,
-    editBlogs,
-    deleteBlogs } = context;
+  const { notes, getBlogs, addBlogs, editBlogs, deleteBlogs } = context;
   const [loading, setLoading] = useState(true);
-  const [note, setNote] = useState({
-    id: "",
-    ecategory: "",
-    ecategorydesc: "",
-    etag: "",
-    esubcategories: [],
-  });
-
-  const ref = useRef(null);
-  const refClose = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,6 +24,18 @@ const Blogs = (props) => {
     fetchClients();
   }, [navigate, getBlogs]);
 
+  const ref = useRef(null);
+  const refClose = useRef(null);
+  const [note, setNote] = useState({
+    id: "",
+    ecategory: "",
+    ecategorydesc: "",
+    etag: "",
+    esubcategories: [],
+    eimage: null,
+  });
+
+
   const updateNote = (currentNote) => {
     ref.current.click();
     setNote({
@@ -45,17 +44,22 @@ const Blogs = (props) => {
       ecategorydesc: currentNote.categorydesc,
       etag: currentNote.tag,
       esubcategories: currentNote.subcategories,
+      eimage: null,
     });
   };
 
   const handleClick = (e) => {
-    editBlogs(note.id, note.ecategory, note.ecategorydesc, note.etag, note.esubcategories);
+    editBlogs(note.id, note.ecategory, note.ecategorydesc, note.etag, note.esubcategories ,note.eimage);
     refClose.current.click();
     props.showAlert("Updated successfully", "success");
   };
 
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
+  };
+
+  const onImageChange = (e) => {
+    setNote({ ...note, eimage: e.target.files[0] });
   };
 
   return (
@@ -82,7 +86,13 @@ const Blogs = (props) => {
           ref={ref}
         >
         </button>
-        <EditItem1 onChange={onChange} note={note} refClose={refClose} handleClick={handleClick} />
+        <EditItem1 
+        onChange={onChange} 
+        note={note} 
+        refClose={refClose} 
+        handleClick={handleClick}
+        onImageChange={onImageChange}
+        />
         <div className="row my-3">
           <div className="container mx-2">
             {loading ? "Loading..." : (notes.length === 0 && "No Items to display")}

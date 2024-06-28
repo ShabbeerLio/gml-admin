@@ -40,7 +40,7 @@ const Card1 = ({ note, index, deleteItem, updateNote, showAlert }) => {
             </tr>
             {showSubcategories && (
                 <tr className="full-width-row">
-                    <td colSpan="4">
+                    <td colSpan="6">
                         <BlogDetail note={note} showAlert={showAlert} />
                     </td>
                 </tr>

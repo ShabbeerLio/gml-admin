@@ -8,6 +8,7 @@ import {
 } from '@mui/icons-material';
 import { MdDesignServices } from "react-icons/md";
 import { LuLanguages } from "react-icons/lu";
+import { RiBloggerLine } from "react-icons/ri";
 import logo from "../../Assets/logo2.jpg";
 import "./SidebarNav.css";
 
@@ -98,7 +99,7 @@ const SidebarNav = () => {
             <Item
               title="Blogs"
               to="/blogs"
-              icon={<LuLanguages/>}
+              icon={<RiBloggerLine/>}
               selected={selected}
               setSelected={setSelected}
               className="sidenav-icon"

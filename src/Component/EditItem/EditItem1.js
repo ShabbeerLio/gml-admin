@@ -1,12 +1,12 @@
 import React from "react";
 
-const EditItem1 = ({ onChange, note, refClose, handleClick }) => {
+const EditItem1 = ({ onChange, note, refClose, handleClick ,onImageChange}) => {
   return (
     <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">Edit Client</h5>
+            <h5 className="modal-title" id="exampleModalLabel">Edit Blog</h5>
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ref={refClose}></button>
           </div>
           <div className="modal-body">
@@ -16,12 +16,24 @@ const EditItem1 = ({ onChange, note, refClose, handleClick }) => {
                 <input type="text" className="form-control" id="ecategory" name="ecategory" value={note.ecategory} onChange={onChange} />
               </div>
               <div className="mb-3">
-                <label htmlFor="ecategorydesc" className="form-label">Category</label>
+                <label htmlFor="ecategorydesc" className="form-label">Description</label>
                 <input type="text" className="form-control" id="ecategorydesc" name="ecategorydesc" value={note.ecategorydesc} onChange={onChange} />
               </div>
               <div className="mb-3">
-                <label htmlFor="etag" className="form-label">Category</label>
+                <label htmlFor="etag" className="form-label">Tag</label>
                 <input type="text" className="form-control" id="etag" name="etag" value={note.etag} onChange={onChange} />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="eimage" className="form-label">
+                  Upload Image
+                </label>
+                <input
+                  type="file"
+                  className="form-control"
+                  id="eimage"
+                  name="eimage"
+                  onChange={onImageChange}
+                />
               </div>
             </form>
           </div>

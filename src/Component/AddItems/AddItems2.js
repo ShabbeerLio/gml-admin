@@ -8,6 +8,7 @@ const AddItems2 = (props) => {
     const [image, setImage] = useState(null);
 
     const handleImageChange = (e) => {
+        e.preventDefault();
         setImage(e.target.files[0]);
     };
 

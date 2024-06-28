@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const AddItems1 = ({ addItem, refClose, showAlert }) => {
     const [note, setNote] = useState({
@@ -7,19 +7,31 @@ const AddItems1 = ({ addItem, refClose, showAlert }) => {
         tag: "",
         subcategories: [{ name: "", description: "" }],
     });
-    //  console.log (note)
+    const [image, setImage] = useState(null);
 
-    const handleClick = (e) => {
+    const handleImageChange = (e) => {
         e.preventDefault();
-        addItem(note.category, note.categorydesc, note.tag, note.subcategories);
-        setNote({
-            category: "",
-            categorydesc: "",
-            tag: "",
-            subcategories: [{ name: "", description: "" }],
-        });
-        refClose.current.click();
-        showAlert("Added successfully", "success");
+        setImage(e.target.files[0]);
+    };
+
+    const handleClick = async (e) => {
+        e.preventDefault();
+
+        try {
+            await addItem(note.category, note.categorydesc, note.tag, note.subcategories, image);
+            setNote({
+                category: "",
+                categorydesc: "",
+                tag: "",
+                subcategories: [{ name: "", description: "" }],
+            });
+            setImage(null);
+            refClose.current.click();
+            showAlert("Added successfully", "success");
+        } catch (error) {
+            console.error("There was an error uploading the file!", error);
+            showAlert("There was an error uploading the file!", "danger");
+        }
     };
 
     const onChange = (e, index, field) => {
@@ -52,7 +64,11 @@ const AddItems1 = ({ addItem, refClose, showAlert }) => {
                         <form>
                             <div className="mb-3">
                                 <label htmlFor="category" className="form-label">Blog</label>
-                                <input type="text" className="form-control" id="category" name="category" value={note.category} onChange={(e) => setNote({ ...note, category: e.target.value })} />
+                                <input type="text" className="form-control" id="category" name="category" value={note.category} onChange={(e) => setNote({ ...note, category: e.target.value })} required />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="image" className="form-label">Image</label>
+                                <input type="file" className="form-control" id="image" name="image" onChange={handleImageChange} required />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="categorydesc" className="form-label">Blog Description</label>
@@ -60,9 +76,9 @@ const AddItems1 = ({ addItem, refClose, showAlert }) => {
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="tag" className="form-label">Page Link</label>
-                                <input type="text" className="form-control" id="tag" name="tag" value={note.tag} onChange={(e) => setNote({ ...note, tag: e.target.value })} placeholder="Enter in Lowercase"/>
+                                <input type="text" className="form-control" id="tag" name="tag" value={note.tag} onChange={(e) => setNote({ ...note, tag: e.target.value })} required placeholder="Enter in Lowercase" />
                             </div>
-                            {note.subcategories?.map((subcategory, index) => (
+                            {note.subcategories.map((subcategory, index) => (
                                 <div key={index} className="mb-3">
                                     <label htmlFor={`subcategory-name-${index}`} className="form-label">Subcategory Name</label>
                                     <input type="text" className="form-control" id={`subcategory-name-${index}`} name="name" value={subcategory.name} onChange={(e) => onChange(e, index, "name")} />
@@ -76,7 +92,7 @@ const AddItems1 = ({ addItem, refClose, showAlert }) => {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" ref={refClose}>Close</button>
-                        <button type="button" className="btn btn-primary" data-bs-dismiss="modal" ref={refClose} onClick={handleClick}>Add</button>
+                        <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={handleClick} ref={refClose}>Add</button>
                     </div>
                 </div>
             </div>
