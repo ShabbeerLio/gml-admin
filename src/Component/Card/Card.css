@@ -57,25 +57,25 @@
 
 /*.............................. Card2.................. */
 
-.card-image{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* padding: 2rem 0rem 1rem 0rem; */
+.card-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding: 2rem 0rem 1rem 0rem; */
 }
 
-.card2-button{
+.card2-button {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
-.card2-button p{
- margin: 0;
- margin-left: 20px;
- cursor: pointer;
+.card2-button p {
+  margin: 0;
+  margin-left: 20px;
+  cursor: pointer;
 }
-.card2-button p svg{
-font-size: 20px;
+.card2-button p svg {
+  font-size: 20px;
 }
 
 .card2-button p:nth-child(1):hover {
@@ -85,8 +85,16 @@ font-size: 20px;
   color: #673de6;
 }
 
-.view{
+.view {
+  text-align: end;
+}
+
+.card-image-blog {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
+}
+.card-image-blog img{
+  width: 35%;
+  object-fit: cover;
 }

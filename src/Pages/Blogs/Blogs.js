@@ -31,9 +31,11 @@ const Blogs = (props) => {
     ecategory: "",
     ecategorydesc: "",
     etag: "",
+    seimage: null,
     esubcategories: [],
-    eimage: null,
   });
+
+  // console.log(note,'data')
 
 
   const updateNote = (currentNote) => {
@@ -43,13 +45,13 @@ const Blogs = (props) => {
       ecategory: currentNote.category,
       ecategorydesc: currentNote.categorydesc,
       etag: currentNote.tag,
+      seimage: null,
       esubcategories: currentNote.subcategories,
-      eimage: null,
     });
   };
 
   const handleClick = (e) => {
-    editBlogs(note.id, note.ecategory, note.ecategorydesc, note.etag, note.esubcategories ,note.eimage);
+    editBlogs(note.id, note.ecategory, note.ecategorydesc, note.etag, note.esubcategories, note.seimage);
     refClose.current.click();
     props.showAlert("Updated successfully", "success");
   };
@@ -59,7 +61,7 @@ const Blogs = (props) => {
   };
 
   const onImageChange = (e) => {
-    setNote({ ...note, eimage: e.target.files[0] });
+    setNote({ ...note, seimage: e.target.files[0] });
   };
 
   return (
@@ -86,12 +88,12 @@ const Blogs = (props) => {
           ref={ref}
         >
         </button>
-        <EditItem1 
-        onChange={onChange} 
-        note={note} 
-        refClose={refClose} 
-        handleClick={handleClick}
-        onImageChange={onImageChange}
+        <EditItem1
+          onChange={onChange}
+          note={note}
+          refClose={refClose}
+          handleClick={handleClick}
+          onImageChange={onImageChange}
         />
         <div className="row my-3">
           <div className="container mx-2">
@@ -104,6 +106,7 @@ const Blogs = (props) => {
                 <th scope="col">Blog</th>
                 <th scope="col">Description</th>
                 <th scope="col">Tag</th>
+                <th scope="col">Banner</th>
                 <th scope="col">Actions</th>
                 <th scope="col">Blog Detail</th>
               </tr>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const EditItem1 = ({ onChange, note, refClose, handleClick ,onImageChange}) => {
+const EditItem1 = ({ onChange, note, refClose, handleClick, onImageChange }) => {
   return (
     <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div className="modal-dialog">
@@ -24,14 +24,14 @@ const EditItem1 = ({ onChange, note, refClose, handleClick ,onImageChange}) => {
                 <input type="text" className="form-control" id="etag" name="etag" value={note.etag} onChange={onChange} />
               </div>
               <div className="mb-3">
-                <label htmlFor="eimage" className="form-label">
+                <label htmlFor="seimage" className="form-label">
                   Upload Image
                 </label>
                 <input
                   type="file"
                   className="form-control"
-                  id="eimage"
-                  name="eimage"
+                  id="seimage"
+                  name="seimage"
                   onChange={onImageChange}
                 />
               </div>

@@ -337,36 +337,44 @@ const NoteState = (props) => {
     
 
     // Edit Blog
-    const editBlogs = async (id, category, categorydesc, tag, subcategories) => {
+    const editBlogs = async (id, category, categorydesc, tag, subcategories, image) => {
         try {
-            // Ensure subcategories is an array of objects with name and description
-            const formattedSubcategories = subcategories.map(sub => ({
-                name: sub.name,
-                description: sub.description || ''
-            }));
-
+            const formData = new FormData();
+            formData.append('category', category);
+            formData.append('categorydesc', categorydesc);
+            formData.append('tag', tag);
+    
+            subcategories.forEach((sub, index) => {
+                formData.append(`subcategories[${index}][name]`, sub.name);
+                formData.append(`subcategories[${index}][description]`, sub.description || '');
+            });
+    
+            if (image) {
+                formData.append('image', image);
+            }
+    
             const response = await fetch(`${host}/api/blog/updateblog/${id}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',
-                    "auth-token": localStorage.getItem('token')
+                    'auth-token': localStorage.getItem('token')
                 },
-                body: JSON.stringify({ category, categorydesc, tag, subcategories: formattedSubcategories })
+                body: formData
             });
-
+    
             if (!response.ok) {
                 const json = await response.json();
                 throw new Error(json.error || 'Failed to edit Blog');
             }
-
+    
             const updatedBlog = await response.json();
-            setNotes(prevNotes => prevNotes.map(note => note._id === id ? updatedBlog.client : note));
+            setNotes(prevNotes => prevNotes.map(note => note._id === id ? updatedBlog.blog : note));
             console.log("Blog edited successfully", "success");
         } catch (error) {
-            console.error("Error editing Blog :", error.message);
-            // showAlert("Failed to edit client", "error");
+            console.error("Error editing Blog:", error.message);
+            // showAlert("Failed to edit blog", "error");
         }
     };
+    
 
     // Delete Blog 
     const deleteBlogs = async (id) => {
@@ -394,21 +402,25 @@ const NoteState = (props) => {
     };
 
     // Add Blog detail
-    const addBlogsSubcategory = async (clientId, name, description) => {
+    const addBlogsSubcategory = async (clientId, name, description, image) => {
         try {
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('image', image);
+    
             const response = await fetch(`${host}/api/blog/${clientId}/subcategories`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
                     "auth-token": localStorage.getItem('token')
                 },
-                body: JSON.stringify({ name, description })
+                body: formData
             });
-
+    
             if (!response.ok) {
                 throw new Error('Failed to add Blog detail');
             }
-
+    
             const updatedClient = await response.json();
             setNotes(prevNotes => prevNotes.map(note => note._id === clientId ? updatedClient.client : note));
             console.log("Blog detail added successfully", "success");
@@ -417,24 +429,31 @@ const NoteState = (props) => {
             // showAlert("Failed to add subcategory", "error");
         }
     };
+    
 
     // Edit Blog detail
-    const editBlogsSubcategory = async (clientId, subcategoryId, name, description) => {
+    const editBlogsSubcategory = async (clientId, subcategoryId, name, description, image) => {
         try {
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('description', description);
+            if (image) {
+                formData.append('image', image);
+            }
+    
             const response = await fetch(`${host}/api/blog/${clientId}/subcategories/${subcategoryId}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',
                     "auth-token": localStorage.getItem('token')
                 },
-                body: JSON.stringify({ name, description })
+                body: formData
             });
-
+    
             if (!response.ok) {
                 const json = await response.json();
                 throw new Error(json.error || 'Failed to edit Blog detail');
             }
-
+    
             const updatedClient = await response.json();
             setNotes(prevNotes => prevNotes.map(note => note._id === clientId ? updatedClient.client : note));
             console.log("Blog detail edited successfully", "success");
@@ -443,6 +462,7 @@ const NoteState = (props) => {
             // showAlert("Failed to edit subcategory", "error");
         }
     };
+    
 
     // Delete Blog detail
     const deleteBlogsSubcategory = async (clientId, subcategoryId) => {

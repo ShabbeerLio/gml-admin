@@ -1,22 +1,33 @@
 import React, { useState } from 'react';
 import { MdAdd } from "react-icons/md";
 
-const AddItemBlog = ({ addItem, showAlert ,notes ,refClose}) => {
+const AddItemBlog = ({ addItem, showAlert, notes, refClose }) => {
     // const { addItem, showAlert ,notes ,refClose} = props;
     const [note, setNote] = useState({ title: "", description: "" });
+    const [image, setImage] = useState(null);
+
+    const handleImageChange = (e) => {
+        e.preventDefault();
+        setImage(e.target.files[0]);
+    };
 
     const handleClick = async (e) => {
         e.preventDefault();
-        const { title, description } = note;
-        addItem(notes._id,title, description); // Pass title and description to addItem
-        setNote({ title: "", description: "" }); // Clear input fields
-        // props.refClose.current.click(); // Close modal
-        showAlert("Added successfully", "success");
+        try {
+            await addItem(notes._id, note.title, note.description, image);
+            setNote({ title: "", description: "" });
+            showAlert("Added successfully", "success");
+        } catch (error) {
+            console.error("There was an error uploading the file!", error);
+            showAlert("There was an error uploading the file!", "danger");
+        }
     };
 
     const onChange = (e) => {
         setNote({ ...note, [e.target.name]: e.target.value });
     };
+
+
 
     return (
         <>
@@ -42,6 +53,7 @@ const AddItemBlog = ({ addItem, showAlert ,notes ,refClose}) => {
                                         required
                                     />
                                 </div>
+                                
                                 <div className="mb-3">
                                     <label htmlFor="description" className="form-label">Description</label>
                                     <textarea
@@ -55,7 +67,18 @@ const AddItemBlog = ({ addItem, showAlert ,notes ,refClose}) => {
                                         required
                                     />
                                 </div>
-                                <button disabled={note.title.length < 3} type="submit" className="AddNote-button"  data-bs-dismiss="modal" onClick={handleClick} aria-label="Close" ref={refClose}>
+                                <div className="mb-3">
+                                    <label htmlFor="image" className="form-label">Image</label>
+                                    <input
+                                        type="file"
+                                        className="form-control"
+                                        id="image"
+                                        name="image"
+                                        onChange={handleImageChange}
+                                        required
+                                    />
+                                </div>
+                                <button disabled={note.title.length < 3} type="submit" className="AddNote-button" data-bs-dismiss="modal" onClick={handleClick} aria-label="Close" ref={refClose}>
                                     <MdAdd /> Add
                                 </button>
                             </form>

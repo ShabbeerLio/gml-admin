@@ -45,7 +45,6 @@ const EditItemBlogDetail = (props) => {
                                         Description
                                     </label>
                                     <textarea
-                                        // type="text"
                                         className="form-control"
                                         name="edescription"
                                         id="edescription"
@@ -54,9 +53,24 @@ const EditItemBlogDetail = (props) => {
                                         value={props.note.edescription}
                                     />
                                 </div>
+                                <div className="mb-3">
+                                    <label htmlFor="eimage" className="form-label">
+                                        Image
+                                    </label>
+                                    <input
+                                        type="file"
+                                        className="form-control"
+                                        id="eimage"
+                                        name="eimage"
+                                        onChange={props.onChange}
+                                    />
+                                </div>
                             </form>
                         </div>
-                        <div className="modal-footer" style={{ display: "flex", flexWrap: "nowrap", borderTop: "1px solid #3c3c3c" }}>
+                        <div
+                            className="modal-footer"
+                            style={{ display: "flex", flexWrap: "nowrap", borderTop: "1px solid #3c3c3c" }}
+                        >
                             <button
                                 ref={props.refClose}
                                 type="button"

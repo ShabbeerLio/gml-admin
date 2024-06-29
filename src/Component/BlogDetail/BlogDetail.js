@@ -8,10 +8,8 @@ import CardBlog from "../Card/CardBlog";
 const BlogDetail = ({ note, showAlert }) => {
     const ref = useRef(null);
     const refClose = useRef(null);
-    const { addBlogsSubcategory,
-        editBlogsSubcategory,
-        deleteBlogsSubcategory } = useContext(NoteContext);
-    const [editForm, setEditForm] = useState({ etitle: "", edescription: "" });
+    const { addBlogsSubcategory, editBlogsSubcategory, deleteBlogsSubcategory } = useContext(NoteContext);
+    const [editForm, setEditForm] = useState({ etitle: "", edescription: "", eimage: null });
     const [currentSubcategoryId, setCurrentSubcategoryId] = useState(null);
 
     if (!note || !note.subcategories) {
@@ -20,18 +18,23 @@ const BlogDetail = ({ note, showAlert }) => {
 
     const handleEditClick = (subNote) => {
         setCurrentSubcategoryId(subNote._id);
-        setEditForm({ etitle: subNote.name, edescription: subNote.description });
-        ref.current.click();  // Open the modal
+        setEditForm({ etitle: subNote.name, edescription: subNote.description, eimage: null });
+        ref.current.click(); 
     };
 
     const handleChange = (e) => {
-        setEditForm({ ...editForm, [e.target.name]: e.target.value });
+        if (e.target.name === "eimage") {
+            setEditForm({ ...editForm, eimage: e.target.files[0] });
+        } else {
+            setEditForm({ ...editForm, [e.target.name]: e.target.value });
+        }
     };
 
     const handleUpdate = () => {
         if (currentSubcategoryId) {
-            editBlogsSubcategory(note._id, currentSubcategoryId, editForm.etitle, editForm.edescription);
+            editBlogsSubcategory(note._id, currentSubcategoryId, editForm.etitle, editForm.edescription, editForm.eimage);
             showAlert("Subcategory updated successfully", "success");
+            refClose.current.click(); // Close the modal
         }
     };
 

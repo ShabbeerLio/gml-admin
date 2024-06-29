@@ -72,7 +72,7 @@ const AddItems1 = ({ addItem, refClose, showAlert }) => {
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="categorydesc" className="form-label">Blog Description</label>
-                                <input type="text" className="form-control" id="categorydesc" name="categorydesc" value={note.categorydesc} onChange={(e) => setNote({ ...note, categorydesc: e.target.value })} />
+                                <textarea type="text" className="form-control" id="categorydesc" name="categorydesc" value={note.categorydesc} onChange={(e) => setNote({ ...note, categorydesc: e.target.value })} />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="tag" className="form-label">Page Link</label>
