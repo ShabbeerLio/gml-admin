@@ -53,57 +53,66 @@ const Clients = (props) => {
 
   return (
     <>
-      <div className="banner">
-        <div className="banner-button">
-          <h2>Languages</h2>
-          <button
-            type="button"
-            className="btn btn-primary d-flex align-items-center"
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-            ref={ref}
-          >
-            <MdAdd /> Add Languages
-          </button>
-        </div>
-        <AddItems addItem={addClients} refClose={refClose} showAlert={props.showAlert} />
-        <button
-          type="button"
-          className="btn btn-primary d-none"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-          ref={ref}
-        >
-        </button>
-        <EditItem2 onChange={onChange} note={note} refClose={refClose} handleClick={handleClick} />
-        <div className="row my-3">
-          <div className="container mx-2">
-            {loading ? "Loading..." : (notes.length === 0 && "No Items to display")}
+      {loading ? (
+        <div className="loader">
+          <div className="spinner-grow" role="status">
+            <span className="visually-hidden">Loading...</span>
           </div>
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">S.No</th>
-                <th scope="col">Category</th>
-                <th scope="col">Actions</th>
-                <th scope="col">Subcategory</th>
-              </tr>
-            </thead>
-            <tbody>
-              {notes && notes.map((note, index) => (
-                note && <Card
-                  key={note._id}
-                  index={index}
-                  deleteItem={deleteClients}
-                  updateNote={updateNote}
-                  showAlert={props.showAlert}
-                  note={note}
-                />
-              ))}
-            </tbody>
-          </table>
         </div>
-      </div>
+      ) : (
+        <>
+          <div className="banner">
+            <div className="banner-button">
+              <h2>Languages</h2>
+              <button
+                type="button"
+                className="btn btn-primary d-flex align-items-center"
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+                ref={ref}
+              >
+                <MdAdd /> Add Languages
+              </button>
+            </div>
+            <AddItems addItem={addClients} refClose={refClose} showAlert={props.showAlert} />
+            <button
+              type="button"
+              className="btn btn-primary d-none"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              ref={ref}
+            >
+            </button>
+            <EditItem2 onChange={onChange} note={note} refClose={refClose} handleClick={handleClick} />
+            <div className="row my-3">
+              <div className="container mx-2">
+                {loading ? "Loading..." : (notes.length === 0 && "No Items to display")}
+              </div>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Actions</th>
+                    <th scope="col">Subcategory</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {notes && notes.map((note, index) => (
+                    note && <Card
+                      key={note._id}
+                      index={index}
+                      deleteItem={deleteClients}
+                      updateNote={updateNote}
+                      showAlert={props.showAlert}
+                      note={note}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>)}
     </>
   );
 };

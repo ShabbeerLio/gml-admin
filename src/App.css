@@ -107,3 +107,11 @@
 .table .blog th:nth-child(6) {
   text-align: end;
 }
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  font-size: 24px;
+}

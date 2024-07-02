@@ -5,7 +5,7 @@ import "./AddItems.css";
 const AddItems2 = (props) => {
     const { addItem } = props;
     const [note, setNote] = useState({ title: "" });
-    const [image, setImage] = useState(null);
+    const [imageUrl, setImage] = useState(null);
 
     const handleImageChange = (e) => {
         e.preventDefault();
@@ -16,7 +16,7 @@ const AddItems2 = (props) => {
         e.preventDefault();
 
         try {
-            await addItem(note.title, image);
+            await addItem(note.title, imageUrl);
             setNote({ title: "" });
             setImage(null);
             props.showAlert("Added successfully", "success");
@@ -53,12 +53,12 @@ const AddItems2 = (props) => {
                                     />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="image" className="form-label">Image</label>
+                                    <label htmlFor="imageUrl" className="form-label">Image</label>
                                     <input
                                         type="file"
                                         className="form-control"
-                                        id="image"
-                                        name="image"
+                                        id="imageUrl"
+                                        name="imageUrl"
                                         onChange={handleImageChange}
                                         required
                                     />

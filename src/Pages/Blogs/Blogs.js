@@ -66,66 +66,75 @@ const Blogs = (props) => {
 
   return (
     <>
-      <div className="banner">
-        <div className="banner-button">
-          <h2>Blog</h2>
-          <button
-            type="button"
-            className="btn btn-primary d-flex align-items-center"
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-            ref={ref}
-          >
-            <MdAdd /> Add Blog
-          </button>
-        </div>
-        <AddItems1 addItem={addBlogs} refClose={refClose} showAlert={props.showAlert} />
-        <button
-          type="button"
-          className="btn btn-primary d-none"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-          ref={ref}
-        >
-        </button>
-        <EditItem1
-          onChange={onChange}
-          note={note}
-          refClose={refClose}
-          handleClick={handleClick}
-          onImageChange={onImageChange}
-        />
-        <div className="row my-3">
-          <div className="container mx-2">
-            {loading ? "Loading..." : (notes.length === 0 && "No Items to display")}
+      {loading ? (
+        <div className="loader">
+          <div className="spinner-grow" role="status">
+            <span className="visually-hidden">Loading...</span>
           </div>
-          <table className="table">
-            <thead>
-              <tr className="blog">
-                <th scope="col">S.No</th>
-                <th scope="col">Blog</th>
-                <th scope="col">Description</th>
-                <th scope="col">Tag</th>
-                <th scope="col">Banner</th>
-                <th scope="col">Actions</th>
-                <th scope="col">Blog Detail</th>
-              </tr>
-            </thead>
-            <tbody>
-              {notes && notes.map((note, index) => (
-                note && <Card1
-                  key={note._id}
-                  index={index}
-                  deleteItem={deleteBlogs}
-                  updateNote={updateNote}
-                  showAlert={props.showAlert}
-                  note={note}
-                />
-              ))}
-            </tbody>
-          </table>
         </div>
-      </div>
+      ) : (
+        <>
+          <div className="banner">
+            <div className="banner-button">
+              <h2>Blog</h2>
+              <button
+                type="button"
+                className="btn btn-primary d-flex align-items-center"
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+                ref={ref}
+              >
+                <MdAdd /> Add Blog
+              </button>
+            </div>
+            <AddItems1 addItem={addBlogs} refClose={refClose} showAlert={props.showAlert} />
+            <button
+              type="button"
+              className="btn btn-primary d-none"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              ref={ref}
+            >
+            </button>
+            <EditItem1
+              onChange={onChange}
+              note={note}
+              refClose={refClose}
+              handleClick={handleClick}
+              onImageChange={onImageChange}
+            />
+            <div className="row my-3">
+              <div className="container mx-2">
+                {loading ? "Loading..." : (notes.length === 0 && "No Items to display")}
+              </div>
+              <table className="table">
+                <thead>
+                  <tr className="blog">
+                    <th scope="col">S.No</th>
+                    <th scope="col">Blog</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Tag</th>
+                    <th scope="col">Banner</th>
+                    <th scope="col">Actions</th>
+                    <th scope="col">Blog Detail</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {notes && notes.map((note, index) => (
+                    note && <Card1
+                      key={note._id}
+                      index={index}
+                      deleteItem={deleteBlogs}
+                      updateNote={updateNote}
+                      showAlert={props.showAlert}
+                      note={note}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>)}
     </>
   );
 };
