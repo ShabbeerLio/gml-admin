@@ -67,8 +67,8 @@ const AddItems1 = ({ addItem, refClose, showAlert }) => {
                                 <input type="text" className="form-control" id="category" name="category" value={note.category} onChange={(e) => setNote({ ...note, category: e.target.value })} required />
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="image" className="form-label">Image</label>
-                                <input type="file" className="form-control" id="image" name="image" onChange={handleImageChange} required />
+                                <label htmlFor="imageUrl" className="form-label">Image</label>
+                                <input type="file" className="form-control" id="imageUrl" name="imageUrl" onChange={handleImageChange} required />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="categorydesc" className="form-label">Blog Description</label>
