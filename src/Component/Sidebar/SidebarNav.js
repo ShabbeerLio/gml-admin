@@ -9,6 +9,7 @@ import {
 import { MdDesignServices } from "react-icons/md";
 import { LuLanguages } from "react-icons/lu";
 import { RiBloggerLine } from "react-icons/ri";
+import { FaMeta } from "react-icons/fa6";
 import logo from "../../Assets/logo2.jpg";
 import "./SidebarNav.css";
 
@@ -100,6 +101,14 @@ const SidebarNav = () => {
               title="Blogs"
               to="/blogs"
               icon={<RiBloggerLine/>}
+              selected={selected}
+              setSelected={setSelected}
+              className="sidenav-icon"
+            />
+            <Item
+              title="Meta Tags"
+              to="/meta"
+              icon={<FaMeta/>}
               selected={selected}
               setSelected={setSelected}
               className="sidenav-icon"

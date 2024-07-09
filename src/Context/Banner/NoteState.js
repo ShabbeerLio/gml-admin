@@ -495,6 +495,189 @@ const NoteState = (props) => {
         }
     };
 
+    // ................................. Meta Tags.......................................//
+    // Get all Meta Tags
+    const getMeta = async () => {
+        const response = await fetch(`${host}/api/meta/fetchallmeta`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": localStorage.getItem('token')
+            },
+        });
+        const json = await response.json()
+        setNotes(json)
+    };
+
+    // Add Meta Tags
+    const addMeta = async (page, subcategories) => {
+        try {
+            // Ensure subcategories is an array of objects with name and description
+            const formattedSubcategories = subcategories.map(subcategory => ({
+                title: subcategory.title,
+                description: subcategory.description || '' 
+            }));
+
+            const response = await fetch(`${host}/api/meta/addmeta`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": localStorage.getItem('token')
+                },
+                body: JSON.stringify({ page, subcategories: formattedSubcategories })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to add client');
+            }
+
+            const meta = await response.json();
+            setNotes(prevNotes => [...prevNotes, meta]);
+            console.log("meta added successfully", "success");
+        } catch (error) {
+            console.error("Error adding meta:", error.message);
+            // showAlert("Failed to add client", "error");
+        }
+    };
+
+    // Edit Meta Tags
+    const editMeta = async (id, page, subcategories) => {
+        try {
+            // Ensure subcategories is an array of objects with name and description
+            const formattedSubcategories = subcategories.map(sub => ({
+                title: sub.title,
+                description: sub.description || ''
+            }));
+
+            const response = await fetch(`${host}/api/meta/updatemeta/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "auth-token": localStorage.getItem('token')
+                },
+                body: JSON.stringify({ page, subcategories: formattedSubcategories })
+            });
+
+            if (!response.ok) {
+                const json = await response.json();
+                throw new Error(json.error || 'Failed to edit client');
+            }
+
+            const updatedMeta = await response.json();
+            setNotes(prevNotes => prevNotes.map(note => note._id === id ? updatedMeta.meta : note));
+            console.log("Client edited successfully", "success");
+        } catch (error) {
+            console.error("Error editing client:", error.message);
+            // showAlert("Failed to edit client", "error");
+        }
+    };
+
+    // Delete Meta Tags
+    const deleteMeta = async (id) => {
+        try {
+            const response = await fetch(`${host}/api/meta/deletemeta/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": localStorage.getItem('token')
+                },
+            });
+
+            if (!response.ok) {
+                const json = await response.json();
+                throw new Error(json.error || 'Failed to delete client');
+            }
+
+            const deletedClient = await response.json();
+            setNotes(prevNotes => prevNotes.filter(note => note._id !== id));
+            console.log("Client deleted successfully", "success");
+        } catch (error) {
+            console.error("Error deleting client:", error.message);
+            // showAlert("Failed to delete client", "error");
+        }
+    };
+
+    // Add Meta Tags Subcategory
+    const addMetaSubcategory = async (clientId, title, description) => {
+        try {
+            const response = await fetch(`${host}/api/meta/${clientId}/subcategories`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": localStorage.getItem('token')
+                },
+                body: JSON.stringify({ title, description })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to add subcategory');
+            }
+
+            const updatedMeta = await response.json();
+            setNotes(prevNotes => prevNotes.map(note => note._id === clientId ? updatedMeta.meta : note));
+            console.log("Subcategory added successfully", "success");
+        } catch (error) {
+            console.error("Error adding subcategory:", error.message);
+            // showAlert("Failed to add subcategory", "error");
+        }
+    };
+
+    // Edit Meta Tags Subcategory
+    const editMetaSubcategory = async (clientId, subcategoryId, title, description) => {
+        try {
+            const response = await fetch(`${host}/api/meta/${clientId}/subcategories/${subcategoryId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "auth-token": localStorage.getItem('token')
+                },
+                body: JSON.stringify({ title, description })
+            });
+
+            if (!response.ok) {
+                const json = await response.json();
+                throw new Error(json.error || 'Failed to edit subcategory');
+            }
+
+            const updatedClient = await response.json();
+            setNotes(prevNotes => prevNotes.map(note => note._id === clientId ? updatedClient.meta : note));
+            console.log("Subcategory edited successfully", "success");
+        } catch (error) {
+            console.error("Error editing subcategory:", error.message);
+            // showAlert("Failed to edit subcategory", "error");
+        }
+    };
+
+    // Delete Meta Tags Subcategory
+    const deleteMetaSubcategory = async (clientId, subcategoryId) => {
+        try {
+            const response = await fetch(`${host}/api/meta/${clientId}/subcategories/${subcategoryId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "auth-token": localStorage.getItem('token')
+                }
+            });
+
+            if (!response.ok) {
+                const json = await response.json();
+                throw new Error(json.error || 'Failed to delete subcategory');
+            }
+
+            // Update state to remove the deleted subcategory
+            setNotes(prevNotes =>
+                prevNotes.map(note =>
+                    note._id === clientId
+                        ? { ...note, subcategories: note.subcategories.filter(sub => sub._id !== subcategoryId) }
+                        : note
+                )
+            );
+        } catch (error) {
+            console.error("Error deleting subcategory:", error.message);
+            // showAlert("Failed to delete subcategory", "error");
+        }
+    };
+
 
     return (
         <NoteContext.Provider value={{
@@ -516,7 +699,14 @@ const NoteState = (props) => {
             deleteBlogs,
             addBlogsSubcategory,
             editBlogsSubcategory,
-            deleteBlogsSubcategory
+            deleteBlogsSubcategory,
+            getMeta,
+            addMeta,
+            editMeta,
+            deleteMeta,
+            addMetaSubcategory,
+            editMetaSubcategory,
+            deleteMetaSubcategory
         }}>
             {props.children}
         </NoteContext.Provider>

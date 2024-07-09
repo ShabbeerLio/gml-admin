@@ -6,7 +6,7 @@ const EditItem2 = ({ onChange, note, refClose, handleClick }) => {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">Edit Client</h5>
+            <h5 className="modal-title" id="exampleModalLabel">Edit Language</h5>
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ref={refClose}></button>
           </div>
           <div className="modal-body">
@@ -19,7 +19,7 @@ const EditItem2 = ({ onChange, note, refClose, handleClick }) => {
           </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" ref={refClose}>Close</button>
-            <button type="button" className="btn btn-primary" onClick={handleClick}>Update Client</button>
+            <button type="button" className="btn btn-primary" onClick={handleClick}>Update Language</button>
           </div>
         </div>
       </div>
